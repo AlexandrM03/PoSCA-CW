@@ -9,6 +9,7 @@ async function bootstrap() {
 	await prismaService.enableShutdownHooks(app);
 
 	app.setGlobalPrefix('api');
+	app.enableCors();
 
 	await app.listen(4200);
 }
