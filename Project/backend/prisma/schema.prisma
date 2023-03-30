@@ -1,91 +1,92 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlserver"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model comments {
-    id            Int      @id(map: "PK__comments__3213E83F8925E310") @default(autoincrement())
-    content       String   @db.VarChar(Max)
-    creation_time DateTime @default(now(), map: "DF__comments__creati__693CA210") @db.DateTime
-    user_id       Int?
-    task_id       Int?
-    tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__comments__task_i__6B24EA82")
-    users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__comments__user_i__6A30C649")
+  id            Int      @id @default(autoincrement())
+  content       String
+  creation_time DateTime @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+  user_id       Int?
+  task_id       Int?
+  tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model discussions {
-    id       Int        @id(map: "PK__discussi__3213E83F7142233A") @default(autoincrement())
-    topic    String     @db.VarChar(50)
-    messages messages[]
+  id       Int        @id @default(autoincrement())
+  topic    String     @db.VarChar(50)
+  messages messages[]
 }
 
 model messages {
-    id            Int          @id(map: "PK__messages__3213E83FFD44C261") @default(autoincrement())
-    content       String       @db.VarChar(Max)
-    creation_time DateTime     @default(now(), map: "DF__messages__creati__59063A47") @db.DateTime
-    discussion_id Int?
-    user_id       Int?
-    discussions   discussions? @relation(fields: [discussion_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__messages__discus__59FA5E80")
-    users         users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__messages__user_i__5AEE82B9")
+  id            Int          @id @default(autoincrement())
+  content       String
+  creation_time DateTime     @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+  discussion_id Int?
+  user_id       Int?
+  discussions   discussions? @relation(fields: [discussion_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users         users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model solutions {
-    id            Int      @id(map: "PK__solution__3213E83FF815EFEF") @default(autoincrement())
-    query         String   @db.VarChar(Max)
-    solution_time DateTime @default(now(), map: "DF__solutions__solut__6477ECF3") @db.DateTime
-    task_id       Int?
-    user_id       Int?
-    tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__solutions__task___656C112C")
-    users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__solutions__user___66603565")
+  id            Int      @id @default(autoincrement())
+  query         String
+  solution_time DateTime @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+  task_id       Int?
+  user_id       Int?
+  tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model statistics {
-    id              Int    @id(map: "PK__statisti__3213E83F3DD7F161") @default(autoincrement())
-    tasks_completed Int    @default(0, map: "DF__statistic__tasks__3F466844")
-    score           Int    @default(0, map: "DF__statistic__score__403A8C7D")
-    user_id         Int?
-    users           users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__statistic__user___412EB0B6")
+  id              Int    @id @default(autoincrement())
+  tasks_completed Int    @default(0)
+  score           Int    @default(0)
+  user_id         Int?
+  users           users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model task_complexities {
-    id    Int     @id(map: "PK__task_com__3213E83FF6C93C77") @default(autoincrement())
-    name  String  @db.VarChar(50)
-    tasks tasks[]
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(50)
+  tasks tasks[]
 }
 
 model tasks {
-    id                Int                @id(map: "PK__tasks__3213E83FE56CA706") @default(autoincrement())
-    title             String             @db.VarChar(50)
-    description       String             @db.VarChar(Max)
-    creation_time     DateTime           @default(now(), map: "DF__tasks__creation___5FB337D6") @db.DateTime
-    solved_times      Int                @default(0, map: "DF__tasks__solved_ti__60A75C0F")
-    solution          String             @db.VarChar(Max)
-    complexity_id     Int?
-    comments          comments[]
-    solutions         solutions[]
-    task_complexities task_complexities? @relation(fields: [complexity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__tasks__complexit__619B8048")
+  id                Int                @id @default(autoincrement())
+  title             String             @db.VarChar(50)
+  description       String
+  creation_time     DateTime           @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+  solved_times      Int                @default(0)
+  solution          Json               @db.Json
+  accepted          Boolean            @default(false)
+  complexity_id     Int?
+  comments          comments[]
+  solutions         solutions[]
+  task_complexities task_complexities? @relation(fields: [complexity_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model user_roles {
-    id    Int     @id(map: "PK__user_rol__3213E83FDD82C358") @default(autoincrement())
-    name  String  @db.VarChar(50)
-    users users[]
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(50)
+  users users[]
 }
 
 model users {
-    id         Int          @id(map: "PK__users__3213E83F233C864E") @default(autoincrement())
-    username   String       @unique(map: "UQ__users__F3DBC5724E722854") @db.VarChar(50)
-    email      String       @unique(map: "UQ__users__AB6E6164BE7FBFBF") @db.VarChar(50)
-    password   String       @db.VarChar(300)
-    active     Boolean      @default(false, map: "DF__users__active__3B75D760")
-    role_id    Int?
-    comments   comments[]
-    messages   messages[]
-    solutions  solutions[]
-    statistics statistics[]
-    user_roles user_roles?  @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__users__role_id__3C69FB99")
+  id              Int          @id @default(autoincrement())
+  username        String       @unique @db.VarChar(50)
+  email           String       @unique @db.VarChar(50)
+  password        String       @db.VarChar(300)
+  activation_code String?
+  role_id         Int?         @default(2)
+  comments        comments[]
+  messages        messages[]
+  solutions       solutions[]
+  statistics      statistics[]
+  user_roles      user_roles?  @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

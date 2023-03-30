@@ -27,18 +27,11 @@ export class AuthService {
 			throw new BadRequestException('User already exists');
 		}
 
-		const userRole = await this.prisma.user_roles.findFirst({
-			where: {
-				name: 'user'
-			}
-		});
-
 		const user = await this.prisma.users.create({
 			data: {
 				email: dto.email,
 				username: dto.username,
-				password: await hash(dto.password),
-				role_id: userRole.id
+				password: await hash(dto.password)
 			}
 		});
 
