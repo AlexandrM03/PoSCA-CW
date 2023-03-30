@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { returnUserObject } from './return-user.object';
 
 @Injectable()
 export class UserService {
@@ -10,9 +9,34 @@ export class UserService {
 		const user = await this.prisma.users.findUnique({
 			where: { id },
 			select: {
-				...returnUserObject
+				id: true,
+				username: true
 			}
 		});
+
+		if (!user) {
+			throw new Error('User not found');
+		}
+
+		return user;
+	}
+
+	async getProfile(username: string) {
+		const user = await this.prisma.users.findUnique({
+			where: { username },
+			select: {
+				id: true,
+				username: true,
+				email: true,
+				solutions: {
+					select: {
+						id: true,
+						query: true,
+						solution_time: true
+					}
+				}
+			}
+		})
 
 		if (!user) {
 			throw new Error('User not found');

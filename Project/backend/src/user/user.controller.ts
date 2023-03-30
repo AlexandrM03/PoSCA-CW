@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { UserService } from './user.service';
@@ -7,9 +7,15 @@ import { UserService } from './user.service';
 export class UserController {
 	constructor(private readonly userService: UserService) { }
 
-	@Get('profile')
+	@Get()
 	@Auth()
-	async getProfile(@CurrentUser('id') id: number) {
+	async getCurrentUser(@CurrentUser('id') id: number) {
 		return this.userService.byId(id);
+	}
+
+	@Get(':username')
+	@Auth()
+	async getProfile(@Param('username') username: string) {
+		return this.userService.getProfile(username);
 	}
 }
