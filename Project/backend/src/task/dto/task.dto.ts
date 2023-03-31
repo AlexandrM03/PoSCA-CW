@@ -1,6 +1,7 @@
-import { IsJSON, IsNumber, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsArray, IsJSON, IsNumber, IsOptional, IsString, MinLength, ValidateNested } from 'class-validator';
 
 export class TaskDto {
+	@IsOptional()
 	@IsNumber()
 	id: number;
 
@@ -19,6 +20,7 @@ export class TaskDto {
 	@IsString()
 	complexity: string;
 
-	@IsJSON()
-	solution: object;
+	@IsArray()
+	@ValidateNested({ each: true })
+	solution: object[];
 }

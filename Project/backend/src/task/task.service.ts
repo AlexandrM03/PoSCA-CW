@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PaginationService } from 'src/pagination/pagination.service';
 import { PrismaService } from 'src/prisma.service';
 import { EnumTaskSort, GetAllTaskDto } from './dto/get-all.task.dto';
-import { CheckQueryDto } from './dto/check-query.dto';
 import { ExercisesService } from 'src/exercises/exercises.service';
+import { TaskDto } from './dto/task.dto';
 
 @Injectable()
 export class TaskService {
@@ -60,6 +60,31 @@ export class TaskService {
 				where: prismaSerchTermFilter
 			})
 		}
+	}
+
+	async create(dto: TaskDto) {
+		const complexity = await this.prisma.task_complexities.findFirst({
+			where: {
+				name: dto.complexity
+			}, select: {
+				id: true
+			}
+		});
+
+		if (!complexity) {
+			throw new NotFoundException('Invalid complexity');
+		}
+
+		const task = await this.prisma.tasks.create({
+			data: {
+				title: dto.title,
+				description: dto.description,
+				complexity_id: complexity.id,
+				solution: dto.solution,
+			}
+		});
+
+		return task;
 	}
 
 	async executeQuery(query: string) {
