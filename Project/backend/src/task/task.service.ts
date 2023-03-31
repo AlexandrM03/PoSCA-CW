@@ -3,12 +3,15 @@ import { Prisma } from '@prisma/client';
 import { PaginationService } from 'src/pagination/pagination.service';
 import { PrismaService } from 'src/prisma.service';
 import { EnumTaskSort, GetAllTaskDto } from './dto/get-all.task.dto';
+import { CheckQueryDto } from './dto/check-query.dto';
+import { ExercisesService } from 'src/exercises/exercises.service';
 
 @Injectable()
 export class TaskService {
 	constructor(
 		private prisma: PrismaService,
-		private paginationService: PaginationService
+		private paginationService: PaginationService,
+		private exercisesService: ExercisesService
 	) { }
 
 	async getAll(dto: GetAllTaskDto = {}) {
@@ -57,5 +60,9 @@ export class TaskService {
 				where: prismaSerchTermFilter
 			})
 		}
+	}
+
+	async executeQuery(query: string) {
+		return await this.exercisesService.executeQuery(query);
 	}
 }

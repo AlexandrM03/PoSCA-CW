@@ -7,10 +7,13 @@ import { PrismaService } from './prisma.service';
 import { UserModule } from './user/user.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { TaskModule } from './task/task.module';
+import { Client } from 'pg';
+import { ExercisesService } from './exercises/exercises.service';
+import { ExercisesModule } from './exercises/exercises.module';
 
 @Module({
-	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule],
+	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule, ExercisesModule],
 	controllers: [AppController],
-	providers: [AppService, PrismaService],
+	providers: [AppService, PrismaService, ExercisesService],
 })
 export class AppModule { }
