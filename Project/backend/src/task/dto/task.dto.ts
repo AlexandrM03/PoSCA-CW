@@ -24,3 +24,9 @@ export class TaskDto {
 	@ValidateNested({ each: true })
 	solution: object[];
 }
+
+export enum EnumTaskComplexity {
+	EASY = 'easy',
+	MEDIUM = 'medium',
+	HARD = 'hard'
+}

@@ -10,9 +10,11 @@ import { TaskModule } from './task/task.module';
 import { Client } from 'pg';
 import { ExercisesService } from './exercises/exercises.service';
 import { ExercisesModule } from './exercises/exercises.module';
+import { SolutionModule } from './solution/solution.module';
+import { StatisticModule } from './statistic/statistic.module';
 
 @Module({
-	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule, ExercisesModule],
+	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule, ExercisesModule, SolutionModule, StatisticModule],
 	controllers: [AppController],
 	providers: [AppService, PrismaService, ExercisesService],
 })
