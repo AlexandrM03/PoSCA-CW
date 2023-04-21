@@ -67,6 +67,16 @@ export class TaskService {
 		}
 	}
 
+	async get(id: number) {
+		const task = await this.byId(id);
+
+		if (!task) {
+			throw new NotFoundException('Task not found');
+		}
+
+		return task;
+	}
+
 	async create(dto: TaskDto) {
 		const complexity = await this.prisma.task_complexities.findFirst({
 			where: {
@@ -133,10 +143,7 @@ export class TaskService {
 	private async byId(id: number) {
 		return await this.prisma.tasks.findUnique({
 			where: {
-				id: id
-			},
-			select: {
-				solution: true
+				id
 			}
 		});
 	}

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GetAllTaskDto } from './dto/get-all.task.dto';
 import { TaskService } from './task.service';
 import { TaskQueryDto } from './dto/task-query.dto';
@@ -15,6 +15,13 @@ export class TaskController {
 	@Get()
 	async getAll(@Query() dto: GetAllTaskDto) {
 		return this.taskService.getAll(dto);
+	}
+
+	@UsePipes(new ValidationPipe())
+	@Auth()
+	@Get(':id')
+	async get(@Param('id') id: number) {
+		return this.taskService.get(+id);
 	}
 
 	@UsePipes(new ValidationPipe())
