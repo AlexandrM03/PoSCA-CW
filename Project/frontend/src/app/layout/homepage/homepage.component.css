@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+
+  position: relative;
+  width: 100%;
+  height: 85vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 10%;
+  gap: 32px;
+  height: 100%;
+}
+
+.info {
+  width: 55%;
+}
+
+.info div {
+  font-weight: 600;
+  font-size: 92px;
+  line-height: 120%;
+}
+
+.info p {
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 135%;
+
+  color: #4d4d4d;
+}
