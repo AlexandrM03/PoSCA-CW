@@ -41,7 +41,7 @@ export class AuthService {
 		});
 		await this.statisticService.create(user.id);
 
-		const tokens = await this.issueTokens(user.id);
+		const tokens = await this.issueTokens(user.id, user.role_id);
 
 		return {
 			user: this.returnUserFields(user),
@@ -51,7 +51,7 @@ export class AuthService {
 
 	async login(dto: Omit<AuthDto, 'username'>) {
 		const user = await this.validateUser(dto);
-		const tokens = await this.issueTokens(user.id);
+		const tokens = await this.issueTokens(user.id, user.role_id);
 
 		return {
 			user: this.returnUserFields(user),
@@ -72,7 +72,7 @@ export class AuthService {
 			}
 		})
 
-		const tokens = await this.issueTokens(user.id);
+		const tokens = await this.issueTokens(user.id, user.role_id);
 
 		return {
 			user: this.returnUserFields(user),
@@ -80,8 +80,8 @@ export class AuthService {
 		}
 	}
 
-	private async issueTokens(userId: number) {
-		const data = { id: userId };
+	private async issueTokens(userId: number, roleId: number) {
+		const data = { id: userId, role: roleId };
 
 		const accessToken = this.jwt.sign(data, {
 			expiresIn: '1h'
