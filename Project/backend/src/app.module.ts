@@ -11,9 +11,12 @@ import { ExercisesService } from './exercises/exercises.service';
 import { ExercisesModule } from './exercises/exercises.module';
 import { SolutionModule } from './solution/solution.module';
 import { StatisticModule } from './statistic/statistic.module';
+import { CommentModule } from './comment/comment.module';
+import { DiscussionModule } from './discussion/discussion.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
-	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule, ExercisesModule, SolutionModule, StatisticModule],
+	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule, ExercisesModule, SolutionModule, StatisticModule, CommentModule, DiscussionModule, MessageModule],
 	controllers: [AppController],
 	providers: [AppService, PrismaService, ExercisesService],
 })
