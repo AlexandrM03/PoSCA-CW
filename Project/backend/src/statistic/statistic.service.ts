@@ -1,18 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { EnumStatisticSort, GetAllStatisticDto } from './dto/get-all.statistic';
+import { Prisma } from '@prisma/client';
+import { PaginationService } from 'src/pagination/pagination.service';
 
 @Injectable()
 export class StatisticService {
-	constructor(private prisma: PrismaService) { }
+	constructor(
+		private prisma: PrismaService,
+		private paginationService: PaginationService
+	) { }
 
-	async create(userId: number) {
-		const statistic = await this.prisma.statistics.create({
-			data: {
-				user_id: userId
+	async getAll(dto: GetAllStatisticDto = {}) {
+		const { sort } = dto;
+		const prismaSort: Prisma.statisticsOrderByWithRelationInput[] = [];
+
+		if (sort === EnumStatisticSort.MOST_SOLVED) {
+			prismaSort.push({ tasks_completed: 'desc' })
+		} else {
+			prismaSort.push({ score: 'desc' })
+		}
+
+		const { perPage, skip } = this.paginationService.getPagination(dto);
+
+		return await this.prisma.statistics.findMany({
+			orderBy: prismaSort,
+			skip,
+			take: perPage,
+			select: {
+				score: true,
+				tasks_completed: true,
+				users: {
+					select: {
+						username: true
+					}
+				}
 			}
 		});
-
-		return statistic;
 	}
 
 	async updateStatistic(userId: number, score: number) {

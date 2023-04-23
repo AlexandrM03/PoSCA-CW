@@ -4,14 +4,12 @@ import { hash, verify } from 'argon2';
 import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import { users } from '@prisma/client';
-import { StatisticService } from 'src/statistic/statistic.service';
 
 @Injectable()
 export class AuthService {
 	constructor(
 		private prisma: PrismaService,
-		private jwt: JwtService,
-		private statisticService: StatisticService
+		private jwt: JwtService
 	) { }
 
 	async register(dto: AuthDto) {
@@ -39,7 +37,11 @@ export class AuthService {
 				password: await hash(dto.password)
 			}
 		});
-		await this.statisticService.create(user.id);
+		await this.prisma.statistics.create({
+			data: {
+				user_id: user.id
+			}
+		});
 
 		const tokens = await this.issueTokens(user.id, user.role_id);
 

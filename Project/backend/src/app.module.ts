@@ -7,7 +7,6 @@ import { PrismaService } from './prisma.service';
 import { UserModule } from './user/user.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { TaskModule } from './task/task.module';
-import { Client } from 'pg';
 import { ExercisesService } from './exercises/exercises.service';
 import { ExercisesModule } from './exercises/exercises.module';
 import { SolutionModule } from './solution/solution.module';
