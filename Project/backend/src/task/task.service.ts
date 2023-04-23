@@ -53,7 +53,14 @@ export class TaskService {
 		const { perPage, skip } = this.paginationService.getPagination(dto);
 
 		const tasks = await this.prisma.tasks.findMany({
-			where: prismaSerchTermFilter,
+			where: {
+				AND: [
+					prismaSerchTermFilter,
+					{
+						accepted: true
+					}
+				]
+			},
 			orderBy: prismaSort,
 			skip,
 			take: perPage
@@ -65,6 +72,14 @@ export class TaskService {
 				where: prismaSerchTermFilter
 			})
 		}
+	}
+
+	async getUnconfirmed() {
+		return await this.prisma.tasks.findMany({
+			where: {
+				accepted: false
+			}
+		});
 	}
 
 	async get(id: number) {
@@ -100,6 +115,23 @@ export class TaskService {
 		});
 
 		return task;
+	}
+
+	async confirm(id: number) {
+		const task = await this.byId(id);
+
+		if (!task) {
+			throw new NotFoundException('Task not found');
+		}
+
+		await this.prisma.tasks.update({
+			where: {
+				id
+			},
+			data: {
+				accepted: true
+			}
+		});
 	}
 
 	async check(dto: TaskQueryDto, userId: number) {
