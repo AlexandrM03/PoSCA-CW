@@ -7,12 +7,16 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomepageComponent } from './layout/homepage/homepage.component';
 import { NavigationComponent } from './layout/navigation/navigation.component';
+import { authInterceptorProviders } from './interceptors/auth.interceptor';
+import { errorInterceptorProviders } from './interceptors/error.interceptor';
+import { ChallengesComponent } from './layout/challenges/challenges.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomepageComponent,
-		NavigationComponent
+		NavigationComponent,
+  ChallengesComponent
 	],
 	imports: [
 		BrowserModule,
@@ -20,7 +24,7 @@ import { NavigationComponent } from './layout/navigation/navigation.component';
 		BrowserAnimationsModule,
 		MatButtonModule
 	],
-	providers: [],
+	providers: [authInterceptorProviders, errorInterceptorProviders],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
