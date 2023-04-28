@@ -10,13 +10,14 @@ import { NavigationComponent } from './layout/navigation/navigation.component';
 import { authInterceptorProviders } from './interceptors/auth.interceptor';
 import { errorInterceptorProviders } from './interceptors/error.interceptor';
 import { ChallengesComponent } from './layout/challenges/challenges.component';
+import { apiInterceptorProviders } from './interceptors/api.interceptor';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomepageComponent,
 		NavigationComponent,
-  ChallengesComponent
+		ChallengesComponent
 	],
 	imports: [
 		BrowserModule,
@@ -24,7 +25,7 @@ import { ChallengesComponent } from './layout/challenges/challenges.component';
 		BrowserAnimationsModule,
 		MatButtonModule
 	],
-	providers: [authInterceptorProviders, errorInterceptorProviders],
+	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
