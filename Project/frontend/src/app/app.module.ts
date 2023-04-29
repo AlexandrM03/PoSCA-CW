@@ -11,19 +11,27 @@ import { authInterceptorProviders } from './interceptors/auth.interceptor';
 import { errorInterceptorProviders } from './interceptors/error.interceptor';
 import { ChallengesComponent } from './layout/challenges/challenges.component';
 import { apiInterceptorProviders } from './interceptors/api.interceptor';
+import { AuthComponent } from './layout/auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomepageComponent,
 		NavigationComponent,
-		ChallengesComponent
+		ChallengesComponent,
+		AuthComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		MatButtonModule
+		MatButtonModule,
+		HttpClientModule,
+		NgbModule,
+		FormsModule
 	],
 	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders],
 	bootstrap: [AppComponent]
