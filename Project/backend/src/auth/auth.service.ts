@@ -99,7 +99,7 @@ export class AuthService {
 	private returnUserFields(user: users) {
 		return {
 			id: user.id,
-			email: user.email
+			username: user.username
 		}
 	}
 

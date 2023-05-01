@@ -15,6 +15,7 @@ import { AuthComponent } from './layout/auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,8 @@ import { FormsModule } from '@angular/forms';
 		MatButtonModule,
 		HttpClientModule,
 		NgbModule,
-		FormsModule
+		FormsModule,
+		MatSnackBarModule
 	],
 	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders],
 	bootstrap: [AppComponent]
