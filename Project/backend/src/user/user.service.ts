@@ -32,7 +32,18 @@ export class UserService {
 					select: {
 						id: true,
 						query: true,
-						solution_time: true
+						solution_time: true,
+						tasks: {
+							select: {
+								title: true,
+							}
+						}
+					}
+				},
+				statistics: {
+					select: {
+						score: true,
+						tasks_completed: true,
 					}
 				}
 			}

@@ -32,7 +32,7 @@ export class AuthComponent {
 				this.tokenStorage.saveToken(data.accessToken);
 				this.tokenStorage.saveUser(data.user);
 
-				this.router.navigate(['/']);
+				this.router.navigate(['/profile', data.user.username]);
 			},
 			error: err => {
 				this.notificationService.error(err.message);
@@ -42,6 +42,18 @@ export class AuthComponent {
 	}
 
 	public register(username: string, email: string, password: string) {
-		this.authService.register(username, email, password);
+		console.log(username, email, password);
+		this.authService.register(username, email, password).subscribe({
+			next: data => {
+				this.tokenStorage.saveToken(data.accessToken);
+				this.tokenStorage.saveUser(data.user);
+
+				this.router.navigate(['/']);
+			},
+			error: err => {
+				this.notificationService.error(err.message);
+				console.log(err);
+			}
+		});
 	}
 }

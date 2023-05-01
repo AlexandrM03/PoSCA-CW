@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
+import { ProfileComponent } from './layout/profile/profile.component';
 
 @NgModule({
 	declarations: [
@@ -23,7 +25,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		HomepageComponent,
 		NavigationComponent,
 		ChallengesComponent,
-		AuthComponent
+		AuthComponent,
+  ProfileComponent
 	],
 	imports: [
 		BrowserModule,
@@ -33,7 +36,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		HttpClientModule,
 		NgbModule,
 		FormsModule,
-		MatSnackBarModule
+		MatSnackBarModule,
+		MatMenuModule
 	],
 	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders],
 	bootstrap: [AppComponent]

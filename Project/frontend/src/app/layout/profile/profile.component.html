@@ -1,0 +1,32 @@
+<app-navigation></app-navigation>
+<div class="user-profile-container" *ngIf="isUserProfileLoaded">
+  <div class="user-info">
+    <h1>{{ userProfile?.username }}</h1>
+    <p>{{ userProfile?.email }}</p>
+  </div>
+
+  <div class="user-stats">
+    <h2>Statistics:</h2>
+    <p>Score: {{ userProfile!.statistics[0].score }}</p>
+    <p>Tasks completed: {{ userProfile!.statistics[0].tasks_completed }}</p>
+  </div>
+
+  <div class="user-solutions">
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Query</th>
+          <th>Solution Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let solution of userProfile?.solutions; let i = index">
+          <td>{{ solution.tasks.title }}</td>
+          <td>{{ solution.query }}</td>
+          <td>{{ solution.solution_time | date : "medium" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

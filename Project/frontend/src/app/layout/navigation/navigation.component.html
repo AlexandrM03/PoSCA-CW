@@ -1,8 +1,16 @@
 <nav>
-  <a routerLink="/">LeetBattles</a>
+  <a routerLink="/" class="main">LeetBattles</a>
 
   <div class="btns">
-    <button class="login">Login</button>
-    <button class="get-started" routerLink="/auth">Get started</button>
+    <ng-container *ngIf="isLoggedIn; else loginButtons">
+      <a [routerLink]="['/profile', username]" class="profile">{{
+        username
+      }}</a>
+      <button class="login" (click)="logOut()">Logout</button>
+    </ng-container>
+    <ng-template #loginButtons>
+      <button class="login">Login</button>
+      <button class="get-started" routerLink="/auth">Get started</button>
+    </ng-template>
   </div>
 </nav>
