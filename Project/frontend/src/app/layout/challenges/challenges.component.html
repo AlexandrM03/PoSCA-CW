@@ -1,1 +1,76 @@
-<p>challenges works!</p>
+<app-navigation></app-navigation>
+<div class="challenges-container" *ngIf="isTasksLoaded">
+  <div class="sort-container">
+    <label for="search">Search:</label>
+    <input
+      type="text"
+      name="search"
+      [(ngModel)]="sort.searchTerm"
+      (input)="onSearch()"
+    />
+    <div class="radio-buttons-container">
+      <label>
+        <input
+          type="radio"
+          name="sort"
+          value="most-solved"
+          [(ngModel)]="sort.sort"
+          (change)="onSortChange()"
+        />
+        Most solved
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="sort"
+          value="least-solved"
+          [(ngModel)]="sort.sort"
+          (change)="onSortChange()"
+        />
+        Least solved
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="sort"
+          value="newest"
+          [(ngModel)]="sort.sort"
+          (change)="onSortChange()"
+        />
+        Newest
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="sort"
+          value="oldest"
+          [(ngModel)]="sort.sort"
+          (change)="onSortChange()"
+        />
+        Oldest
+      </label>
+    </div>
+  </div>
+  <div class="challenges-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Creation Time</th>
+          <th>Solved Times</th>
+          <th>Complexity ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.creation_time | date : "medium" }}</td>
+          <td>{{ task.solved_times }}</td>
+          <td>{{ task.complexity_id }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

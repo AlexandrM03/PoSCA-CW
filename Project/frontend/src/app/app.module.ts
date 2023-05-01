@@ -18,6 +18,9 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileComponent } from './layout/profile/profile.component';
+import { ChallengeComponent } from './layout/challenge/challenge.component';
+import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 @NgModule({
 	declarations: [
@@ -26,7 +29,8 @@ import { ProfileComponent } from './layout/profile/profile.component';
 		NavigationComponent,
 		ChallengesComponent,
 		AuthComponent,
-  ProfileComponent
+		ProfileComponent,
+		ChallengeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -37,9 +41,20 @@ import { ProfileComponent } from './layout/profile/profile.component';
 		NgbModule,
 		FormsModule,
 		MatSnackBarModule,
-		MatMenuModule
+		MatMenuModule,
+		HighlightModule,
+		MonacoEditorModule.forRoot()
 	],
-	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders],
+	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders,
+		{
+			provide: HIGHLIGHT_OPTIONS,
+			useValue: {
+				coreLibraryLoader: () => import('highlight.js/lib/core'),
+				languages: {
+					sql: () => import('highlight.js/lib/languages/sql')
+				}
+			}
+		}],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

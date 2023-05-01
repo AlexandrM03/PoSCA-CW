@@ -66,12 +66,14 @@ export class TaskService {
 			take: perPage
 		});
 
-		return {
-			tasks,
-			length: await this.prisma.tasks.count({
-				where: prismaSerchTermFilter
-			})
-		}
+		// return {
+		// 	tasks,
+		// 	length: await this.prisma.tasks.count({
+		// 		where: prismaSerchTermFilter
+		// 	})
+		// }
+
+		return tasks;
 	}
 
 	async getUnconfirmed() {
@@ -176,6 +178,8 @@ export class TaskService {
 		return await this.prisma.tasks.findUnique({
 			where: {
 				id
+			}, include: {
+				comments: true
 			}
 		});
 	}

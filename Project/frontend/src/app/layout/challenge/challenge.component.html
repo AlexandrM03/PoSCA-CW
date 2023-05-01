@@ -1,0 +1,41 @@
+<app-navigation></app-navigation>
+<div class="task-container" *ngIf="isTaskLoaded">
+  <div class="task-info">
+    <h2>{{ task?.title }}</h2>
+    <p>{{ task?.description }}</p>
+  </div>
+  <div class="test">
+    <button class="test-btn" (click)="check()">Check</button>
+    <button class="test-btn" (click)="query()">Test</button>
+    <button class="submit-btn">Submit</button>
+  </div>
+  <div class="sql-query">
+    <ngx-monaco-editor
+      [options]="editorOptions"
+      [(ngModel)]="sqlCode"
+    ></ngx-monaco-editor>
+  </div>
+  <div class="sql-results">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns">{{ column }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data">
+          <td *ngFor="let column of columns">{{ row[column] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="comments">
+    <h3>Comments</h3>
+    <ul>
+      <li *ngFor="let comment of task?.comments">
+        <p>{{ comment.content }}</p>
+        <small>{{ comment.creation_time | date }}</small>
+      </li>
+    </ul>
+  </div>
+</div>
