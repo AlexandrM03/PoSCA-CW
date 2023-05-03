@@ -63,7 +63,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let task of tasks">
+        <tr
+          *ngFor="let task of tasks"
+          [routerLink]="['/challenges/' + task.id]"
+        >
           <td>{{ task.title }}</td>
           <td>{{ task.description }}</td>
           <td>{{ task.creation_time | date : "medium" }}</td>

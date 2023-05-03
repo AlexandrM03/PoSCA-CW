@@ -58,6 +58,10 @@ input[type="text"]:focus {
   border-bottom: 1px solid #ddd;
 }
 
+.challenges-table tr {
+  cursor: pointer;
+}
+
 .challenges-table th {
   border-bottom: 1px solid #ddd;
 }

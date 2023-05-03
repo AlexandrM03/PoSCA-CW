@@ -3,10 +3,18 @@
 
   <div class="btns">
     <ng-container *ngIf="isLoggedIn; else loginButtons">
-      <a [routerLink]="['/profile', username]" class="profile">{{
+      <!-- <a [routerLink]="['/profile', username]" class="profile">{{
         username
       }}</a>
-      <button class="login" (click)="logOut()">Logout</button>
+      <button class="login" (click)="logOut()">Logout</button> -->
+      <div class="dropdown">
+        <a class="profile">{{ username }}</a>
+        <div class="dropdown-content">
+          <a [routerLink]="['/profile', username]">Profile</a>
+          <a [routerLink]="['/challenges']">Challenges</a>
+          <a (click)="logOut()" [routerLink]="['/auth']">Logout</a>
+        </div>
+      </div>
     </ng-container>
     <ng-template #loginButtons>
       <button class="login">Login</button>

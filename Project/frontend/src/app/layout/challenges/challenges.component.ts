@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TaskSortDto } from 'src/app/dto/task-sort.dto';
 import { Task } from 'src/app/models/task.model';
 import { TaskService } from 'src/app/services/task.service';
@@ -14,7 +15,8 @@ export class ChallengesComponent implements OnInit {
 	public sort: TaskSortDto;
 
 	constructor(
-		private taskService: TaskService
+		private taskService: TaskService,
+		private router: Router
 	) {
 		this.sort = {
 			sort: 'most-solved',
