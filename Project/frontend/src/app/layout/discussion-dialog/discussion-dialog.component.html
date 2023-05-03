@@ -1,0 +1,9 @@
+<div class="form-container">
+  <input placeholder="Topic" required [(ngModel)]="topic" />
+  <div class="btns">
+    <button class="submit" [disabled]="topic === ''" (click)="onSubmit()">
+      Submit
+    </button>
+    <button class="cancel" (click)="onCancel()">Cancel</button>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +23,7 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ChatComponent } from './layout/chat/chat.component';
 import { DiscussionsComponent } from './layout/discussions/discussions.component';
+import { DiscussionDialogComponent } from './layout/discussion-dialog/discussion-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -33,8 +34,9 @@ import { DiscussionsComponent } from './layout/discussions/discussions.component
 		AuthComponent,
 		ProfileComponent,
 		ChallengeComponent,
-  ChatComponent,
-  DiscussionsComponent
+		ChatComponent,
+		DiscussionsComponent,
+  DiscussionDialogComponent
 	],
 	imports: [
 		BrowserModule,
@@ -47,7 +49,8 @@ import { DiscussionsComponent } from './layout/discussions/discussions.component
 		MatSnackBarModule,
 		MatMenuModule,
 		HighlightModule,
-		MonacoEditorModule.forRoot()
+		MonacoEditorModule.forRoot(),
+		MatDialogModule
 	],
 	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders,
 		{
