@@ -7,7 +7,12 @@ export class DiscussionService {
 	constructor(private prisma: PrismaService) { }
 
 	async getAll() {
-		return await this.prisma.discussions.findMany();
+		return await this.prisma.discussions.findMany({
+			select: {
+				id: true,
+				topic: true
+			}
+		});
 	}
 
 	async create(dto: DiscussionDto) {

@@ -37,10 +37,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
 			});
 			this.socket.on('loadMessages', (messages: ChatMessageDto[]) => {
 				this.messages = messages;
-				console.log(this.messages)
 			});
 			this.socket.on('newMessage', (message: ChatMessageDto) => {
 				this.messages.push(message);
+				setTimeout(() => this.scrollToBottom(), 150);
 			});
 		});
 		this.userId = this.tokenStorage.getUserId();

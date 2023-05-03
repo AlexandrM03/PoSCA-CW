@@ -1,0 +1,9 @@
+<app-navigation></app-navigation>
+<div class="discussions-container">
+  <h2>Discussions</h2>
+  <ul class="discussions-list" *ngFor="let discussion of discussions">
+    <li class="discussion-item" [routerLink]="['/discussions', discussion.id]">
+      <span class="discussion-topic">{{ discussion.topic }}</span>
+    </li>
+  </ul>
+</div>

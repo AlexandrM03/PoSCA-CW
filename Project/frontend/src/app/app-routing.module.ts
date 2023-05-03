@@ -7,6 +7,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { ChallengesComponent } from './layout/challenges/challenges.component';
 import { ChallengeComponent } from './layout/challenge/challenge.component';
 import { ChatComponent } from './layout/chat/chat.component';
+import { DiscussionsComponent } from './layout/discussions/discussions.component';
 
 const routes: Routes = [
 	{ path: '', component: HomepageComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
 	{ path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuardService] },
 	{ path: 'challenges', component: ChallengesComponent, canActivate: [AuthGuardService] },
 	{ path: 'challenges/:id', component: ChallengeComponent, canActivate: [AuthGuardService] },
+	{ path: 'discussions', component: DiscussionsComponent, canActivate: [AuthGuardService] },
 	{ path: 'discussions/:id', component: ChatComponent, canActivate: [AuthGuardService] },
 ];
 

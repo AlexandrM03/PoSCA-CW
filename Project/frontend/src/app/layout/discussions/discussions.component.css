@@ -1,0 +1,33 @@
+.discussions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.discussions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.discussion-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.discussion-topic {
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  max-width: 100%;
+}
