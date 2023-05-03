@@ -1,0 +1,26 @@
+<app-navigation></app-navigation>
+<div class="chat-container">
+  <div class="messages-container" #chatContainer>
+    <div
+      *ngFor="let message of messages"
+      class="message"
+      [class.own-message]="message.users.username === username"
+    >
+      <div class="message-header">
+        {{ message.users.username }} -
+        <span class="message-date">{{
+          message.creation_time | date : "MMM d, h:mm a"
+        }}</span>
+      </div>
+      <div class="message-content">{{ message.content }}</div>
+    </div>
+  </div>
+  <div class="input-container">
+    <input
+      [(ngModel)]="newMessage"
+      (keyup.enter)="sendMessage()"
+      class="input-field"
+    />
+    <button (click)="sendMessage()" class="send-button">Send</button>
+  </div>
+</div>

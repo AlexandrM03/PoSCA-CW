@@ -1,6 +1,6 @@
 import { IsNumber, IsString, MinLength } from 'class-validator';
 
-export class ChatDto {
+export class MessageDto {
 	@IsString()
 	@MinLength(3, {
 		message: 'Message must be at least 3 characters long'
@@ -8,8 +8,8 @@ export class ChatDto {
 	content: string;
 
 	@IsNumber()
-	discussionId: number;
+	userId: string;
 
 	@IsNumber()
-	userId: number;
+	discussionId: string;
 }

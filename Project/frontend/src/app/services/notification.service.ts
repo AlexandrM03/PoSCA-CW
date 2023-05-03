@@ -14,4 +14,12 @@ export class NotificationService {
 			duration: 3000
 		});
 	}
+
+	public success(message: string) {
+		this.snackbar.open(message, '✅', {
+			duration: 3000,
+			panelClass: ['success'],
+			verticalPosition: 'top'
+		});
+	}
 }

@@ -1,27 +1,33 @@
-import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { ChatService } from './chat.service';
-import { Server } from 'socket.io';
-import { ChatDto } from './dto/chat.dto';
+import { Server, Socket } from 'socket.io';
+import { MessageDto } from './dto/message.dto';
 
 @WebSocketGateway()
-export class ChatGateway {
+export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 	@WebSocketServer() server: Server;
 
 	constructor(private readonly chatService: ChatService) { }
 
-	@SubscribeMessage('message')
-	async handleMessage(client: any, dto: ChatDto) {
+	async handleConnection(socket: Socket) {
+		const discussionId = socket.handshake.query.discussionId;
+		socket.join(`discussion-${discussionId}`);
+		const messages = await this.chatService.findAll(+discussionId);
+		socket.emit('loadMessages', messages);
+	}
+
+	async handleDisconnect(socket: Socket) {
+		const discussionId = socket.handshake.query.discussionId;
+		socket.leave(`discussion-${discussionId}`);
+	}
+
+	async sendMessage(dto: MessageDto) {
 		const message = await this.chatService.create(dto);
-		this.server.emit(`discussion-${dto.discussionId}-message`, message);
+		this.server.to(`discussion-${dto.discussionId}`).emit('newMessage', message);
 	}
 
-	@SubscribeMessage('join')
-	async handleJoin(client: any, discussionId: number) {
-		client.join(`discussion-${discussionId}`);
-	}
-
-	@SubscribeMessage('leave')
-	async handleLeave(client: any, discussionId: number) {
-		client.leave(`discussion-${discussionId}`);
+	@SubscribeMessage('writeMessage')
+	async onMessage(client: Socket, dto: MessageDto) {
+		await this.sendMessage(dto);
 	}
 }

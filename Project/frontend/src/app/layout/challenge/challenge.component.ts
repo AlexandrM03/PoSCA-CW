@@ -49,7 +49,8 @@ export class ChallengeComponent implements OnInit {
 	}
 
 	public query(): void {
-		this.taskService.query(this.sqlCode).subscribe({
+		const queryToRun = this.sqlCode.replace(/(\r\n|\n|\r|\t)/gm, ' ');
+		this.taskService.query(queryToRun).subscribe({
 			next: (data: any) => {
 				if (data.length > 0) {
 					this.columns = Object.keys(data[0]);
@@ -61,6 +62,19 @@ export class ChallengeComponent implements OnInit {
 			error: err => {
 				this.notificationService.error('Error during execution of query');
 				console.log(err);
+			}
+		});
+	}
+
+	public submit(): void {
+		const queryToRun = this.sqlCode.replace(/(\r\n|\n|\r|\t)/gm, ' ');
+		this.taskService.check(this.task!.id, queryToRun).subscribe({
+			next: (data: any) => {
+				if (data.success) {
+					this.notificationService.success(data.message);
+				} else {
+					this.notificationService.error(data.message);
+				}
 			}
 		});
 	}

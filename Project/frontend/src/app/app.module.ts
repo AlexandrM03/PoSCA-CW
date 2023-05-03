@@ -21,6 +21,7 @@ import { ProfileComponent } from './layout/profile/profile.component';
 import { ChallengeComponent } from './layout/challenge/challenge.component';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { ChatComponent } from './layout/chat/chat.component';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 		ChallengesComponent,
 		AuthComponent,
 		ProfileComponent,
-		ChallengeComponent
+		ChallengeComponent,
+  ChatComponent
 	],
 	imports: [
 		BrowserModule,
