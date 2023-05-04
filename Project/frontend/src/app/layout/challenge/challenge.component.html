@@ -29,6 +29,14 @@
       </tbody>
     </table>
   </div>
+  <div class="input-container">
+    <input
+      [(ngModel)]="content"
+      (keyup.enter)="createComment()"
+      class="input-field"
+    />
+    <button (click)="createComment()" class="send-button">Send</button>
+  </div>
   <div class="comments">
     <h3>Comments</h3>
     <ul>

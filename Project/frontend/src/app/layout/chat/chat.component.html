@@ -21,6 +21,12 @@
       (keyup.enter)="sendMessage()"
       class="input-field"
     />
-    <button (click)="sendMessage()" class="send-button">Send</button>
+    <button
+      (click)="sendMessage()"
+      class="send-button"
+      [disabled]="newMessage === ''"
+    >
+      Send
+    </button>
   </div>
 </div>

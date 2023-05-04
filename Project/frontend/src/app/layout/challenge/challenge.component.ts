@@ -1,8 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Comment } from 'src/app/models/comment.model';
 import { Task } from 'src/app/models/task.model';
+import { CommentService } from 'src/app/services/comment.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TaskService } from 'src/app/services/task.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
 	selector: 'app-challenge',
@@ -16,11 +19,14 @@ export class ChallengeComponent implements OnInit {
 	public sqlCode: string = '';
 	public columns: string[] = [];
 	public data: any[] = [];
+	public content: string = '';
 
 	constructor(
 		private taskService: TaskService,
 		private route: ActivatedRoute,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private commentService: CommentService,
+		private tokenStorage: TokenStorageService
 	) { }
 
 	ngOnInit(): void {
@@ -77,5 +83,20 @@ export class ChallengeComponent implements OnInit {
 				}
 			}
 		});
+	}
+
+	public createComment(): void {
+		if (this.content.trim()) {
+			this.commentService.createComment(this.content, this.tokenStorage.getUserId(), this.task!.id).subscribe({
+				next: (comment: Comment) => {
+					this.task!.comments!.push(comment);
+					this.content = '';
+				},
+				error: err => {
+					this.notificationService.error(err.message);
+					console.log(err);
+				}
+			})
+		}
 	}
 }
