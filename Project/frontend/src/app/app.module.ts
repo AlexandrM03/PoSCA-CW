@@ -24,6 +24,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ChatComponent } from './layout/chat/chat.component';
 import { DiscussionsComponent } from './layout/discussions/discussions.component';
 import { DiscussionDialogComponent } from './layout/discussion-dialog/discussion-dialog.component';
+import { StatisticComponent } from './layout/statistic/statistic.component';
 
 @NgModule({
 	declarations: [
@@ -36,7 +37,8 @@ import { DiscussionDialogComponent } from './layout/discussion-dialog/discussion
 		ChallengeComponent,
 		ChatComponent,
 		DiscussionsComponent,
-		DiscussionDialogComponent
+		DiscussionDialogComponent,
+  StatisticComponent
 	],
 	imports: [
 		BrowserModule,

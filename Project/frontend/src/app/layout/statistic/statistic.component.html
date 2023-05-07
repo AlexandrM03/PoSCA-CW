@@ -1,0 +1,25 @@
+<app-navigation></app-navigation>
+<div class="container">
+  <h1>Leaderboard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Username</th>
+        <th>Score</th>
+        <th>Tasks Completed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let stat of statistic; let i = index"
+        [routerLink]="['/profile', stat.users.username]"
+      >
+        <td>{{ i + 1 }}</td>
+        <td>{{ stat.users.username }}</td>
+        <td>{{ stat.score }}</td>
+        <td>{{ stat.tasks_completed }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

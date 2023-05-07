@@ -58,7 +58,7 @@ input[type="text"]:focus {
   border-bottom: 1px solid #ddd;
 }
 
-.challenges-table tr {
+.challenges-table tbody tr {
   cursor: pointer;
 }
 

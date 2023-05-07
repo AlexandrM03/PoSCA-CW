@@ -186,7 +186,18 @@ export class TaskService {
 			where: {
 				id
 			}, include: {
-				comments: true
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						creation_time: true,
+						users: {
+							select: {
+								username: true
+							}
+						}
+					}
+				}
 			}
 		});
 	}

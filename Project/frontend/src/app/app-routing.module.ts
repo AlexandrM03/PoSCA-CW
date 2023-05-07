@@ -8,6 +8,7 @@ import { ChallengesComponent } from './layout/challenges/challenges.component';
 import { ChallengeComponent } from './layout/challenge/challenge.component';
 import { ChatComponent } from './layout/chat/chat.component';
 import { DiscussionsComponent } from './layout/discussions/discussions.component';
+import { StatisticComponent } from './layout/statistic/statistic.component';
 
 const routes: Routes = [
 	{ path: '', component: HomepageComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
 	{ path: 'challenges/:id', component: ChallengeComponent, canActivate: [AuthGuardService] },
 	{ path: 'discussions', component: DiscussionsComponent, canActivate: [AuthGuardService] },
 	{ path: 'discussions/:id', component: ChatComponent, canActivate: [AuthGuardService] },
+	{ path: 'leaderboard', component: StatisticComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
