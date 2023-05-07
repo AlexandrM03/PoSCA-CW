@@ -9,6 +9,9 @@ export interface UserProfileDto {
 			solution_time: Date;
 			tasks: {
 				title: string;
+				task_complexities: {
+					name: string;
+				}
 			}
 		}
 	];

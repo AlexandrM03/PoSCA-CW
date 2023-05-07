@@ -9,5 +9,8 @@ export interface Task {
 	solution: object[];
 	accepted: boolean;
 	complexity_id: number;
-	comments?: Comment[]
+	comments?: Comment[];
+	task_complexities?: {
+		name: string;
+	}
 }

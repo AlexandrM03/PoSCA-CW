@@ -56,10 +56,10 @@
       <thead>
         <tr>
           <th>Title</th>
+          <th>Complexity</th>
           <th>Description</th>
-          <th>Creation Time</th>
           <th>Solved Times</th>
-          <th>Complexity ID</th>
+          <th>Creation Time</th>
         </tr>
       </thead>
       <tbody>
@@ -68,10 +68,10 @@
           [routerLink]="['/challenges/' + task.id]"
         >
           <td>{{ task.title }}</td>
+          <td>{{ task.task_complexities!.name! }}</td>
           <td>{{ task.description }}</td>
-          <td>{{ task.creation_time | date : "medium" }}</td>
           <td>{{ task.solved_times }}</td>
-          <td>{{ task.complexity_id }}</td>
+          <td>{{ task.creation_time | date : "medium" }}</td>
         </tr>
       </tbody>
     </table>

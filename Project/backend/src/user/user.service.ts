@@ -36,6 +36,11 @@ export class UserService {
 						tasks: {
 							select: {
 								title: true,
+								task_complexities: {
+									select: {
+										name: true
+									}
+								}
 							}
 						}
 					}

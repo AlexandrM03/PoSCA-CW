@@ -36,7 +36,7 @@ import { DiscussionDialogComponent } from './layout/discussion-dialog/discussion
 		ChallengeComponent,
 		ChatComponent,
 		DiscussionsComponent,
-  DiscussionDialogComponent
+		DiscussionDialogComponent
 	],
 	imports: [
 		BrowserModule,
@@ -59,7 +59,8 @@ import { DiscussionDialogComponent } from './layout/discussion-dialog/discussion
 				coreLibraryLoader: () => import('highlight.js/lib/core'),
 				languages: {
 					sql: () => import('highlight.js/lib/languages/sql')
-				}
+				},
+				themePath: "assets/styles/solarized-dark.css"
 			}
 		}],
 	bootstrap: [AppComponent]

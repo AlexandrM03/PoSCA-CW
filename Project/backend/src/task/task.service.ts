@@ -61,6 +61,13 @@ export class TaskService {
 					}
 				]
 			},
+			include: {
+				task_complexities: {
+					select: {
+						name: true
+					}
+				}
+			},
 			orderBy: prismaSort,
 			skip,
 			take: perPage
