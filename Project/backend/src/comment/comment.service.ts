@@ -19,6 +19,9 @@ export class CommentService {
 						username: true
 					}
 				}
+			},
+			orderBy: {
+				creation_time: 'desc'
 			}
 		});
 	}
@@ -29,6 +32,15 @@ export class CommentService {
 				content: dto.content,
 				user_id: dto.userId,
 				task_id: dto.taskId
+			},
+			select: {
+				content: true,
+				creation_time: true,
+				users: {
+					select: {
+						username: true
+					}
+				}
 			}
 		});
 	}

@@ -24,6 +24,10 @@ export class TaskService {
 		return this.http.get('/task', { params });
 	}
 
+	public getIdsOfSolvedTasks(): Observable<any> {
+		return this.http.get('/task/solved');
+	}
+
 	public getTask(id: string): Observable<any> {
 		return this.http.get(`/task/${id}`);
 	}

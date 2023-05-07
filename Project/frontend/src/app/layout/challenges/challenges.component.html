@@ -57,6 +57,7 @@
         <tr>
           <th>Title</th>
           <th>Complexity</th>
+          <th>Solved</th>
           <th>Description</th>
           <th>Solved Times</th>
           <th>Creation Time</th>
@@ -67,8 +68,14 @@
           *ngFor="let task of tasks"
           [routerLink]="['/challenges/' + task.id]"
         >
-          <td>{{ task.title }}</td>
-          <td>{{ task.task_complexities!.name! }}</td>
+          <td>
+            {{ task.title }}
+          </td>
+          <td [ngStyle]="{ color: getColor(task.task_complexities!.name!) }">
+            {{ task.task_complexities!.name! }}
+          </td>
+          <td *ngIf="idsOfSolvedTasks.includes(task.id)">Yes</td>
+          <td *ngIf="!idsOfSolvedTasks.includes(task.id)">No</td>
           <td>{{ task.description }}</td>
           <td>{{ task.solved_times }}</td>
           <td>{{ task.creation_time | date : "medium" }}</td>

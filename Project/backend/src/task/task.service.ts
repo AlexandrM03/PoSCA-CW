@@ -101,6 +101,23 @@ export class TaskService {
 		return task;
 	}
 
+	async getIdsOfSolvedTasks(userId: number) {
+		const tasks = await this.prisma.tasks.findMany({
+			where: {
+				solutions: {
+					some: {
+						user_id: userId
+					}
+				}
+			},
+			select: {
+				id: true
+			}
+		});
+
+		return tasks.map(task => task.id);
+	}
+
 	async create(dto: TaskDto) {
 		const complexity = await this.prisma.task_complexities.findFirst({
 			where: {

@@ -6,6 +6,7 @@
     "info sql-query sql-query"
     "test sql-query sql-query"
     "results results results"
+    "input input input"
     "comments comments comments";
   gap: 20px;
   margin: 0 10%;
@@ -30,6 +31,7 @@ ngx-monaco-editor {
 .test {
   grid-area: test;
 
+  align-self: self-end;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -111,6 +113,8 @@ small {
 
 .input-container {
   display: flex;
+  grid-area: input;
+  width: 40%;
 }
 
 .input-field {

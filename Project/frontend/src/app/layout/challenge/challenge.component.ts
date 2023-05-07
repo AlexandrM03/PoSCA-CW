@@ -15,6 +15,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 export class ChallengeComponent implements OnInit {
 	editorOptions = { theme: 'vs-dark', language: 'pgsql' };
 	public task: Task | undefined;
+	public comments: Comment[] = [];
 	public isTaskLoaded: boolean = false;
 	public sqlCode: string = '';
 	public columns: string[] = [];
@@ -44,6 +45,15 @@ export class ChallengeComponent implements OnInit {
 					console.log(err);
 				}
 			});
+
+			this.commentService.getCommentsByTaskId(params['id']).subscribe({
+				next: data => {
+					this.comments = data;
+				},
+				error: err => {
+					console.log(err);
+				}
+			});
 		});
 	}
 
@@ -55,7 +65,8 @@ export class ChallengeComponent implements OnInit {
 	}
 
 	public query(): void {
-		const queryToRun = this.sqlCode.replace(/(\r\n|\n|\r|\t)/gm, ' ');
+		const queryToRun = this.sqlCode.replace(/--.*|\/\*[\s\S]*?\*\//gm, '')
+			.replace(/(\r\n|\n|\r|\t)/gm, ' ');
 		this.taskService.query(queryToRun).subscribe({
 			next: (data: any) => {
 				if (data.length > 0) {
@@ -73,7 +84,8 @@ export class ChallengeComponent implements OnInit {
 	}
 
 	public submit(): void {
-		const queryToRun = this.sqlCode.replace(/(\r\n|\n|\r|\t)/gm, ' ');
+		const queryToRun = this.sqlCode.replace(/--.*|\/\*[\s\S]*?\*\//gm, '')
+			.replace(/(\r\n|\n|\r|\t)/gm, ' ');
 		this.taskService.check(this.task!.id, queryToRun).subscribe({
 			next: (data: any) => {
 				if (data.success) {
@@ -89,7 +101,7 @@ export class ChallengeComponent implements OnInit {
 		if (this.content.trim()) {
 			this.commentService.createComment(this.content, this.tokenStorage.getUserId(), this.task!.id).subscribe({
 				next: (comment: Comment) => {
-					this.task!.comments!.push(comment);
+					this.comments.unshift(comment);
 					this.content = '';
 				},
 				error: err => {

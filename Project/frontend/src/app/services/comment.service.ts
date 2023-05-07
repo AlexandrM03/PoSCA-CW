@@ -10,6 +10,10 @@ export class CommentService {
 		private http: HttpClient
 	) { }
 
+	public getCommentsByTaskId(taskId: number): Observable<any> {
+		return this.http.get(`/comment/${taskId}`);
+	}
+
 	public createComment(content: string, userId: number, taskId: number): Observable<any> {
 		return this.http.post('/comment', {
 			content,

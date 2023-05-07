@@ -21,6 +21,14 @@ export class TaskController {
 	}
 
 	@UseGuards(RolesGuard)
+	@Roles(Role.User)
+	@Auth()
+	@Get('solved')
+	async getSolved(@CurrentUser('id') id: number) {
+		return this.taskService.getIdsOfSolvedTasks(id);
+	}
+
+	@UseGuards(RolesGuard)
 	@Roles(Role.Admin)
 	@Auth()
 	@Get('unconfirmed')

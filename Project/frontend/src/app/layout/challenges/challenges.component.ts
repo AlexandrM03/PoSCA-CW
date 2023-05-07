@@ -11,6 +11,7 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class ChallengesComponent implements OnInit {
 	public tasks: Task[] | undefined;
+	public idsOfSolvedTasks: number[] = [];
 	public isTasksLoaded: boolean = false;
 	public sort: TaskSortDto;
 
@@ -29,6 +30,15 @@ export class ChallengesComponent implements OnInit {
 			next: data => {
 				this.tasks = data;
 				this.isTasksLoaded = true;
+			},
+			error: err => {
+				console.log(err);
+			}
+		});
+
+		this.taskService.getIdsOfSolvedTasks().subscribe({
+			next: data => {
+				this.idsOfSolvedTasks = data;
 			},
 			error: err => {
 				console.log(err);
@@ -57,4 +67,14 @@ export class ChallengesComponent implements OnInit {
 			}
 		});
 	}
+
+	public getColor(complexity: string) {
+		switch (complexity) {
+			case 'easy': return 'green';
+			case 'medium': return 'orange';
+			case 'hard': return 'red';
+			default: return 'black';
+		}
+	}
+
 }
