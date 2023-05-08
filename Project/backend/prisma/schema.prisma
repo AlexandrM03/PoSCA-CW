@@ -13,6 +13,7 @@ model comments {
   creation_time DateTime @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
   user_id       Int?
   task_id       Int?
+  reported      Boolean  @default(false)
   tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

@@ -21,4 +21,20 @@ export class CommentService {
 			taskId
 		})
 	}
+
+	public deleteComment(commentId: number): Observable<any> {
+		return this.http.delete(`/comment/${commentId}`);
+	}
+
+	public reportComment(commentId: number): Observable<any> {
+		return this.http.put(`/comment/${commentId}`, {});
+	}
+
+	public rejectReport(commentId: number): Observable<any> {
+		return this.http.put(`/comment/${commentId}/reject`, {});
+	}
+
+	public getReportedComments(): Observable<any> {
+		return this.http.get('/comment/reported');
+	}
 }

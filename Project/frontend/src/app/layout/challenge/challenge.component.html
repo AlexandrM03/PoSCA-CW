@@ -57,7 +57,12 @@
           </span>
           <small>{{ comment.creation_time | date : "MMM d, h:mm a" }}</small>
         </span>
-        <div style="margin-top: 5px">{{ comment.content }}</div>
+        <div style="margin-top: 5px">
+          {{ comment.content }}
+          <mat-icon (click)="reportComment(comment.id)"
+            >report_problem</mat-icon
+          >
+        </div>
       </li>
     </ul>
   </div>

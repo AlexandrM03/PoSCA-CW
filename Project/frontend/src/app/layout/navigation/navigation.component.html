@@ -8,6 +8,7 @@
         <div class="dropdown-content">
           <a [routerLink]="['/profile', username]" *ngIf="!isAdmin">Profile</a>
           <a [routerLink]="['/challenges']">Challenges</a>
+          <a [routerLink]="['/comments']" *ngIf="isAdmin">Comments</a>
           <a [routerLink]="['/leaderboard']" *ngIf="!isAdmin">Leaderboard</a>
           <a [routerLink]="['/sandbox']" *ngIf="!isAdmin">Sandbox</a>
           <a [routerLink]="['/discussions']">Discussions</a>

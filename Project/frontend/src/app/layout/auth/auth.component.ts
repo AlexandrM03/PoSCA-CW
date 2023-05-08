@@ -15,9 +15,7 @@ export class AuthComponent {
 		private tokenStorage: TokenStorageService,
 		private notificationService: NotificationService,
 		private router: Router
-	) {
-		// TODO: if token storage is not empty, redirect to something 
-	}
+	) { }
 
 	loginUsername: string = '';
 	loginPassword: string = '';
@@ -32,7 +30,11 @@ export class AuthComponent {
 				this.tokenStorage.saveToken(data.accessToken);
 				this.tokenStorage.saveUser(data.user);
 
-				this.router.navigate(['/profile', data.user.username]);
+				if (this.tokenStorage.isAdmin()) {
+					this.router.navigate(['/challenges']);
+				} else {
+					this.router.navigate(['/profile', data.user.username]);
+				}
 			},
 			error: err => {
 				this.notificationService.error(err.message);

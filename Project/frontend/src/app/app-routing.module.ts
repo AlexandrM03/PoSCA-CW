@@ -10,6 +10,7 @@ import { ChatComponent } from './layout/chat/chat.component';
 import { DiscussionsComponent } from './layout/discussions/discussions.component';
 import { StatisticComponent } from './layout/statistic/statistic.component';
 import { SandboxComponent } from './layout/sandbox/sandbox.component';
+import { CommentsComponent } from './layout/comments/comments.component';
 
 const routes: Routes = [
 	{ path: '', component: HomepageComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
 	{ path: 'discussions', component: DiscussionsComponent, canActivate: [AuthGuardService] },
 	{ path: 'discussions/:id', component: ChatComponent, canActivate: [AuthGuardService] },
 	{ path: 'leaderboard', component: StatisticComponent, canActivate: [AuthGuardService] },
-	{ path: 'sandbox', component: SandboxComponent, canActivate: [AuthGuardService] }
+	{ path: 'sandbox', component: SandboxComponent, canActivate: [AuthGuardService] },
+	{ path: 'comments', component: CommentsComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

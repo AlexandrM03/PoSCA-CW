@@ -166,3 +166,15 @@ small {
   border: 1px solid #5c9ce6;
   color: #000;
 }
+
+mat-icon {
+  height: 20px;
+  color: #e27272;
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+mat-icon:hover {
+  color: red;
+  cursor: pointer;
+}

@@ -1,0 +1,41 @@
+.container {
+  margin: 0 10%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+small {
+  font-style: italic;
+  color: #555;
+}
+
+.delete {
+  height: 20px;
+  color: #e27272;
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+.delete:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.done {
+  height: 20px;
+  color: rgb(7, 151, 7);
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+.done:hover {
+  color: #72e2a2;
+  cursor: pointer;
+}

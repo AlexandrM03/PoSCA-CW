@@ -117,6 +117,18 @@ export class ChallengeComponent implements OnInit {
 		}
 	}
 
+	public reportComment(id: number): void {
+		this.commentService.reportComment(id).subscribe({
+			next: () => {
+				this.notificationService.success('Comment reported');
+			},
+			error: err => {
+				this.notificationService.error(err.message);
+				console.log(err);
+			}
+		});
+	}
+
 	public confirm(): void {
 		this.taskService.confirm(this.task!.id).subscribe({
 			next: () => {

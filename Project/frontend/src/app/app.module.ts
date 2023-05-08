@@ -26,6 +26,9 @@ import { DiscussionsComponent } from './layout/discussions/discussions.component
 import { DiscussionDialogComponent } from './layout/discussion-dialog/discussion-dialog.component';
 import { StatisticComponent } from './layout/statistic/statistic.component';
 import { SandboxComponent } from './layout/sandbox/sandbox.component';
+import { CommentsComponent } from './layout/comments/comments.component';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
 	declarations: [
@@ -39,8 +42,9 @@ import { SandboxComponent } from './layout/sandbox/sandbox.component';
 		ChatComponent,
 		DiscussionsComponent,
 		DiscussionDialogComponent,
-  StatisticComponent,
-  SandboxComponent
+		StatisticComponent,
+		SandboxComponent,
+		CommentsComponent
 	],
 	imports: [
 		BrowserModule,
@@ -54,7 +58,8 @@ import { SandboxComponent } from './layout/sandbox/sandbox.component';
 		MatMenuModule,
 		HighlightModule,
 		MonacoEditorModule.forRoot(),
-		MatDialogModule
+		MatDialogModule,
+		MatIconModule
 	],
 	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders,
 		{

@@ -1,0 +1,27 @@
+<app-navigation></app-navigation>
+<div class="container">
+  <div class="comments">
+    <ul>
+      <li *ngFor="let comment of comments">
+        <span>
+          <span
+            style="margin-right: 5px; color: #6dacf3; cursor: pointer"
+            [routerLink]="['/profile', comment.users.username]"
+          >
+            {{ comment.users.username }}
+          </span>
+          <small>{{ comment.creation_time | date : "MMM d, h:mm a" }}</small>
+        </span>
+        <div style="margin-top: 5px">
+          {{ comment.content }}
+          <mat-icon class="delete" (click)="deleteComment(comment.id)"
+            >delete</mat-icon
+          >
+          <mat-icon class="done" (click)="rejectReport(comment.id)"
+            >done</mat-icon
+          >
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
