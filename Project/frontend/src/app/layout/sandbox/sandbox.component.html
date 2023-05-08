@@ -1,0 +1,43 @@
+<app-navigation></app-navigation>
+<div class="task-container">
+  <div class="task-info">
+    <input
+      type="text"
+      [(ngModel)]="createTaskDto.title"
+      placeholder="Enter title"
+    />
+    <textarea
+      [(ngModel)]="createTaskDto.description"
+      placeholder="Enter description"
+    ></textarea>
+    <select [(ngModel)]="createTaskDto.complexity">
+      <option *ngFor="let difficulty of difficulties" [value]="difficulty">
+        {{ difficulty }}
+      </option>
+    </select>
+    <div class="test">
+      <button class="test-btn" (click)="query()">Test</button>
+      <button class="submit-btn" (click)="submit()">Submit</button>
+    </div>
+  </div>
+  <div class="sql-query">
+    <ngx-monaco-editor
+      [options]="editorOptions"
+      [(ngModel)]="sqlCode"
+    ></ngx-monaco-editor>
+  </div>
+  <div class="sql-results">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns">{{ column }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data">
+          <td *ngFor="let column of columns">{{ row[column] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

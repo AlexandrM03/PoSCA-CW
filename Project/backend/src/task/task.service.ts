@@ -136,7 +136,7 @@ export class TaskService {
 				title: dto.title,
 				description: dto.description,
 				complexity_id: complexity.id,
-				solution: dto.solution,
+				solution: JSON.parse(dto.solution)
 			}
 		});
 

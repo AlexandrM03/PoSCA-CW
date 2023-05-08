@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskSortDto } from '../dto/task-sort.dto';
+import { CreateTaskDto } from '../dto/create-task.dto';
 
 @Injectable({
 	providedIn: 'root'
@@ -22,6 +23,10 @@ export class TaskService {
 		}
 
 		return this.http.get('/task', { params });
+	}
+
+	public create(dto: CreateTaskDto): Observable<any> {
+		return this.http.post('/task', dto);
 	}
 
 	public getIdsOfSolvedTasks(): Observable<any> {

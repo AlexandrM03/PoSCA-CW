@@ -43,6 +43,9 @@ export class UserService {
 								}
 							}
 						}
+					},
+					orderBy: {
+						solution_time: 'desc'
 					}
 				},
 				statistics: {

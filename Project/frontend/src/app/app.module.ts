@@ -25,6 +25,7 @@ import { ChatComponent } from './layout/chat/chat.component';
 import { DiscussionsComponent } from './layout/discussions/discussions.component';
 import { DiscussionDialogComponent } from './layout/discussion-dialog/discussion-dialog.component';
 import { StatisticComponent } from './layout/statistic/statistic.component';
+import { SandboxComponent } from './layout/sandbox/sandbox.component';
 
 @NgModule({
 	declarations: [
@@ -38,7 +39,8 @@ import { StatisticComponent } from './layout/statistic/statistic.component';
 		ChatComponent,
 		DiscussionsComponent,
 		DiscussionDialogComponent,
-  StatisticComponent
+  StatisticComponent,
+  SandboxComponent
 	],
 	imports: [
 		BrowserModule,

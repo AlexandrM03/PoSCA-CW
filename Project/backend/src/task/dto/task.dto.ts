@@ -20,9 +20,10 @@ export class TaskDto {
 	@IsString()
 	complexity: string;
 
-	@IsArray()
-	@ValidateNested({ each: true })
-	solution: object[];
+	// @IsArray()
+	// @ValidateNested({ each: true })
+	@IsString()
+	solution: string;
 }
 
 export enum EnumTaskComplexity {
