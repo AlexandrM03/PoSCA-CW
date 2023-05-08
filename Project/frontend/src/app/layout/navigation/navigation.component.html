@@ -3,17 +3,13 @@
 
   <div class="btns">
     <ng-container *ngIf="isLoggedIn; else loginButtons">
-      <!-- <a [routerLink]="['/profile', username]" class="profile">{{
-        username
-      }}</a>
-      <button class="login" (click)="logOut()">Logout</button> -->
       <div class="dropdown">
         <a class="profile">{{ username }}</a>
         <div class="dropdown-content">
-          <a [routerLink]="['/profile', username]">Profile</a>
+          <a [routerLink]="['/profile', username]" *ngIf="!isAdmin">Profile</a>
           <a [routerLink]="['/challenges']">Challenges</a>
-          <a [routerLink]="['/leaderboard']">Leaderboard</a>
-          <a [routerLink]="['/sandbox']">Sandbox</a>
+          <a [routerLink]="['/leaderboard']" *ngIf="!isAdmin">Leaderboard</a>
+          <a [routerLink]="['/sandbox']" *ngIf="!isAdmin">Sandbox</a>
           <a [routerLink]="['/discussions']">Discussions</a>
           <a (click)="logOut()" [routerLink]="['/auth']">Logout</a>
         </div>

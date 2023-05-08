@@ -33,6 +33,18 @@ export class TaskService {
 		return this.http.get('/task/solved');
 	}
 
+	public getUnconfirmedTasks(): Observable<any> {
+		return this.http.get('/task/unconfirmed');
+	}
+
+	public confirm(id: number): Observable<any> {
+		return this.http.put(`/task/${id}`, {});
+	}
+
+	public reject(id: number): Observable<any> {
+		return this.http.delete(`/task/${id}`, {});
+	}
+
 	public getTask(id: string): Observable<any> {
 		return this.http.get(`/task/${id}`);
 	}

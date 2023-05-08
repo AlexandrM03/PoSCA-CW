@@ -31,6 +31,14 @@ export class TokenStorageService {
 		return JSON.parse(window.sessionStorage.getItem(USER_KEY)?.toString() || '{}').id;
 	}
 
+	public getUserRole(): any {
+		return JSON.parse(window.sessionStorage.getItem(USER_KEY)?.toString() || '{}').role;
+	}
+
+	public isAdmin(): boolean {
+		return this.getUserRole() == 1;
+	}
+
 	public logOut(): void {
 		window.sessionStorage.clear();
 		window.location.reload();

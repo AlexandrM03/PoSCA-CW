@@ -10,6 +10,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 export class NavigationComponent implements OnInit {
 	isLoggedIn = false;
 	username = '';
+	isAdmin = false;
 
 	constructor(
 		private tokenStorage: TokenStorageService
@@ -19,6 +20,7 @@ export class NavigationComponent implements OnInit {
 		this.isLoggedIn = !!this.tokenStorage.getToken();
 
 		if (this.isLoggedIn) {
+			this.isAdmin = this.tokenStorage.isAdmin();
 			this.username = this.tokenStorage.getUser();
 		}
 		console.log(this.username);

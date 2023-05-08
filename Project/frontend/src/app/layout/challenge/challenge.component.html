@@ -7,7 +7,15 @@
   <div class="test">
     <button class="test-btn" (click)="check()">Check</button>
     <button class="test-btn" (click)="query()">Test</button>
-    <button class="submit-btn" (click)="submit()">Submit</button>
+    <button class="submit-btn" (click)="submit()" *ngIf="!isAdmin">
+      Submit
+    </button>
+    <button class="confirm-btn" (click)="confirm()" *ngIf="isAdmin">
+      Confirm
+    </button>
+    <button class="reject-btn" (click)="reject()" *ngIf="isAdmin">
+      Reject
+    </button>
   </div>
   <div class="sql-query">
     <ngx-monaco-editor
@@ -29,7 +37,7 @@
       </tbody>
     </table>
   </div>
-  <div class="input-container">
+  <div class="input-container" *ngIf="!isAdmin">
     <input
       [(ngModel)]="content"
       (keyup.enter)="createComment()"
@@ -37,7 +45,7 @@
     />
     <button (click)="createComment()" class="send-button">Send</button>
   </div>
-  <div class="comments">
+  <div class="comments" *ngIf="!isAdmin">
     <ul>
       <li *ngFor="let comment of comments">
         <span>

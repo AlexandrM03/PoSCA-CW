@@ -24,7 +24,13 @@
       <tbody>
         <tr *ngFor="let solution of userProfile?.solutions; let i = index">
           <td>{{ solution.tasks.title }}</td>
-          <td>{{ solution.tasks.task_complexities.name }}</td>
+          <td
+            [ngStyle]="{
+              color: getColor(solution.tasks.task_complexities!.name!)
+            }"
+          >
+            {{ solution.tasks.task_complexities.name }}
+          </td>
           <td
             ngx-highlight
             [languages]="['sql']"

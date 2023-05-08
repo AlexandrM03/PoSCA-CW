@@ -99,7 +99,8 @@ export class AuthService {
 	private returnUserFields(user: users) {
 		return {
 			id: user.id,
-			username: user.username
+			username: user.username,
+			role: user.role_id
 		}
 	}
 

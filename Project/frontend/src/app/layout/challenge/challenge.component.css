@@ -66,6 +66,18 @@ ngx-monaco-editor {
   color: #000;
 }
 
+.confirm-btn {
+  background: none;
+  color: #fff;
+  border: 1px solid rgb(53, 167, 53);
+}
+
+.reject-btn {
+  background: none;
+  color: #fff;
+  border: 1px solid rgb(173, 55, 55);
+}
+
 button:hover {
   background: #fff;
   color: #000;

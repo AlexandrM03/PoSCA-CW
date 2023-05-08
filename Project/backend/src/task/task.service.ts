@@ -87,6 +87,13 @@ export class TaskService {
 		return await this.prisma.tasks.findMany({
 			where: {
 				accepted: false
+			},
+			include: {
+				task_complexities: {
+					select: {
+						name: true
+					}
+				}
 			}
 		});
 	}
@@ -156,6 +163,20 @@ export class TaskService {
 			},
 			data: {
 				accepted: true
+			}
+		});
+	}
+
+	async reject(id: number) {
+		const task = await this.byId(id);
+
+		if (!task) {
+			throw new NotFoundException('Task not found');
+		}
+
+		await this.prisma.tasks.delete({
+			where: {
+				id
 			}
 		});
 	}

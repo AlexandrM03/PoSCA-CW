@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Comment } from 'src/app/models/comment.model';
 import { Task } from 'src/app/models/task.model';
 import { CommentService } from 'src/app/services/comment.service';
@@ -21,16 +21,19 @@ export class ChallengeComponent implements OnInit {
 	public columns: string[] = [];
 	public data: any[] = [];
 	public content: string = '';
+	public isAdmin: boolean = false;
 
 	constructor(
 		private taskService: TaskService,
 		private route: ActivatedRoute,
 		private notificationService: NotificationService,
 		private commentService: CommentService,
-		private tokenStorage: TokenStorageService
+		private tokenStorage: TokenStorageService,
+		private router: Router
 	) { }
 
 	ngOnInit(): void {
+		this.isAdmin = this.tokenStorage.isAdmin();
 		this.route.params.subscribe(params => {
 			this.taskService.getTask(params['id']).subscribe({
 				next: data => {
@@ -46,14 +49,16 @@ export class ChallengeComponent implements OnInit {
 				}
 			});
 
-			this.commentService.getCommentsByTaskId(params['id']).subscribe({
-				next: data => {
-					this.comments = data;
-				},
-				error: err => {
-					console.log(err);
-				}
-			});
+			if (!this.isAdmin) {
+				this.commentService.getCommentsByTaskId(params['id']).subscribe({
+					next: data => {
+						this.comments = data;
+					},
+					error: err => {
+						console.log(err);
+					}
+				});
+			}
 		});
 	}
 
@@ -110,5 +115,29 @@ export class ChallengeComponent implements OnInit {
 				}
 			})
 		}
+	}
+
+	public confirm(): void {
+		this.taskService.confirm(this.task!.id).subscribe({
+			next: () => {
+				this.router.navigate(['/challenges']);
+			},
+			error: err => {
+				this.notificationService.error(err.message);
+				console.log(err);
+			}
+		});
+	}
+
+	public reject(): void {
+		this.taskService.reject(this.task!.id).subscribe({
+			next: () => {
+				this.router.navigate(['/challenges']);
+			},
+			error: err => {
+				this.notificationService.error(err.message);
+				console.log(err);
+			}
+		});
 	}
 }

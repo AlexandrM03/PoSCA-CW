@@ -32,4 +32,13 @@ export class ProfileComponent implements OnInit {
 			});
 		});
 	}
+
+	public getColor(complexity: string) {
+		switch (complexity) {
+			case 'easy': return 'green';
+			case 'medium': return 'orange';
+			case 'hard': return 'red';
+			default: return 'black';
+		}
+	}
 }

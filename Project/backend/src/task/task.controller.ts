@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GetAllTaskDto } from './dto/get-all.task.dto';
 import { TaskService } from './task.service';
 import { TaskQueryDto } from './dto/task-query.dto';
@@ -58,6 +58,14 @@ export class TaskController {
 	@Put(':id')
 	async confirm(@Param('id') id: number) {
 		return this.taskService.confirm(+id);
+	}
+
+	@UseGuards(RolesGuard)
+	@Roles(Role.Admin)
+	@Auth()
+	@Delete(':id')
+	async reject(@Param('id') id: number) {
+		return this.taskService.reject(+id);
 	}
 
 	@UseGuards(RolesGuard)

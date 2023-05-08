@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TaskSortDto } from 'src/app/dto/task-sort.dto';
 import { Task } from 'src/app/models/task.model';
 import { TaskService } from 'src/app/services/task.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
 	selector: 'app-challenges',
@@ -14,9 +15,11 @@ export class ChallengesComponent implements OnInit {
 	public idsOfSolvedTasks: number[] = [];
 	public isTasksLoaded: boolean = false;
 	public sort: TaskSortDto;
+	public isAdmin: boolean = false;
 
 	constructor(
 		private taskService: TaskService,
+		private tokenStorage: TokenStorageService,
 		private router: Router
 	) {
 		this.sort = {
@@ -26,24 +29,38 @@ export class ChallengesComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.taskService.getTasks(this.sort).subscribe({
-			next: data => {
-				this.tasks = data;
-				this.isTasksLoaded = true;
-			},
-			error: err => {
-				console.log(err);
-			}
-		});
+		this.isAdmin = this.tokenStorage.isAdmin();
 
-		this.taskService.getIdsOfSolvedTasks().subscribe({
-			next: data => {
-				this.idsOfSolvedTasks = data;
-			},
-			error: err => {
-				console.log(err);
-			}
-		});
+		if (this.isAdmin) {
+			this.taskService.getUnconfirmedTasks().subscribe({
+				next: data => {
+					this.tasks = data;
+					this.isTasksLoaded = true;
+				},
+				error: err => {
+					console.log(err);
+				}
+			});
+		} else {
+			this.taskService.getTasks(this.sort).subscribe({
+				next: data => {
+					this.tasks = data;
+					this.isTasksLoaded = true;
+				},
+				error: err => {
+					console.log(err);
+				}
+			});
+
+			this.taskService.getIdsOfSolvedTasks().subscribe({
+				next: data => {
+					this.idsOfSolvedTasks = data;
+				},
+				error: err => {
+					console.log(err);
+				}
+			});
+		}
 	}
 
 	public onSortChange(): void {
@@ -76,5 +93,4 @@ export class ChallengesComponent implements OnInit {
 			default: return 'black';
 		}
 	}
-
 }

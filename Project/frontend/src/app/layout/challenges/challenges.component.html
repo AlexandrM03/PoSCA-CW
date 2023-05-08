@@ -8,7 +8,7 @@
       [(ngModel)]="sort.searchTerm"
       (input)="onSearch()"
     />
-    <div class="radio-buttons-container">
+    <div class="radio-buttons-container" *ngIf="!isAdmin">
       <label>
         <input
           type="radio"
@@ -59,7 +59,7 @@
           <th>Complexity</th>
           <th>Solved</th>
           <th>Description</th>
-          <th>Solved Times</th>
+          <th *ngIf="!isAdmin">Solved Times</th>
           <th>Creation Time</th>
         </tr>
       </thead>
@@ -77,7 +77,7 @@
           <td *ngIf="idsOfSolvedTasks.includes(task.id)">Yes</td>
           <td *ngIf="!idsOfSolvedTasks.includes(task.id)">No</td>
           <td>{{ task.description }}</td>
-          <td>{{ task.solved_times }}</td>
+          <td *ngIf="!isAdmin">{{ task.solved_times }}</td>
           <td>{{ task.creation_time | date : "medium" }}</td>
         </tr>
       </tbody>
