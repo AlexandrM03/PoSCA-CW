@@ -26,6 +26,24 @@
       [(ngModel)]="sqlCode"
     ></ngx-monaco-editor>
   </div>
+  <div class="schemas">
+    <div *ngFor="let schema of schemas">
+      <label>
+        <input
+          type="radio"
+          name="sort"
+          value="{{ schema.id }}"
+          [(ngModel)]="createTaskDto.databaseId"
+        />
+        {{ schema.name }}
+        <img
+          [src]="'data:image/png;base64,' + schema.schema"
+          *ngIf="schema.schema"
+          style="width: 100%"
+        />
+      </label>
+    </div>
+  </div>
   <div class="sql-results">
     <table>
       <thead>

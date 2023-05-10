@@ -143,7 +143,8 @@ export class TaskService {
 				title: dto.title,
 				description: dto.description,
 				complexity_id: complexity.id,
-				solution: JSON.parse(dto.solution)
+				solution: JSON.parse(dto.solution),
+				database_id: +dto.databaseId
 			}
 		});
 

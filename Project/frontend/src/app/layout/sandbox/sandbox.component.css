@@ -1,11 +1,12 @@
 .task-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr 0fr auto;
   grid-template-areas:
     "info sql-query sql-query"
     "info sql-query sql-query"
-    "info results results";
+    "info results results"
+    "schemas results results";
   gap: 20px;
   margin: 0 10%;
 }

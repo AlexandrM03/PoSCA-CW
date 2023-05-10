@@ -24,6 +24,10 @@ export class TaskDto {
 	// @ValidateNested({ each: true })
 	@IsString()
 	solution: string;
+
+	@IsOptional()
+	@IsString()
+	databaseId: number;
 }
 
 export enum EnumTaskComplexity {

@@ -3,4 +3,5 @@ export interface CreateTaskDto {
 	description: string;
 	complexity: string;
 	solution: string;
+	databaseId: number;
 }

@@ -30,7 +30,7 @@ export class SchemaController {
 	}
 
 	@UseGuards(RolesGuard)
-	@Roles(Role.User)
+	@Roles(Role.User, Role.Admin)
 	@Auth()
 	@Get(':id')
 	async getSchemaByTaskId(id: number, @Res() res: Response) {

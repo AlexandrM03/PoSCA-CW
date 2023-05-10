@@ -57,7 +57,7 @@
         <tr>
           <th>Title</th>
           <th>Complexity</th>
-          <th>Solved</th>
+          <th *ngIf="!isAdmin">Solved</th>
           <th>Description</th>
           <th *ngIf="!isAdmin">Solved Times</th>
           <th>Creation Time</th>
@@ -74,8 +74,8 @@
           <td [ngStyle]="{ color: getColor(task.task_complexities!.name!) }">
             {{ task.task_complexities!.name! }}
           </td>
-          <td *ngIf="idsOfSolvedTasks.includes(task.id)">Yes</td>
-          <td *ngIf="!idsOfSolvedTasks.includes(task.id)">No</td>
+          <td *ngIf="idsOfSolvedTasks.includes(task.id) && !isAdmin">Yes</td>
+          <td *ngIf="!idsOfSolvedTasks.includes(task.id) && !isAdmin">No</td>
           <td>{{ task.description }}</td>
           <td *ngIf="!isAdmin">{{ task.solved_times }}</td>
           <td>{{ task.creation_time | date : "medium" }}</td>

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CreateTaskDto } from 'src/app/dto/create-task.dto';
+import { Schema } from 'src/app/models/schema.model';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SchemaService } from 'src/app/services/schema.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { TaskService } from 'src/app/services/task.service';
 	templateUrl: './sandbox.component.html',
 	styleUrls: ['./sandbox.component.css']
 })
-export class SandboxComponent {
+export class SandboxComponent implements OnInit {
 	editorOptions = { theme: 'vs-dark', language: 'pgsql' };
 	public sqlCode: string = '';
 	public columns: string[] = [];
@@ -17,14 +19,29 @@ export class SandboxComponent {
 		title: '',
 		description: '',
 		complexity: '',
-		solution: ''
+		solution: '',
+		databaseId: 0
 	};
 	public difficulties = ['easy', 'medium', 'hard'];
+	public schemas: Schema[] = [];
 
 	constructor(
 		private taskService: TaskService,
+		private schemaService: SchemaService,
 		private notificationService: NotificationService
 	) { }
+
+	ngOnInit(): void {
+		this.schemaService.getAllSchemas().subscribe({
+			next: (data: Schema[]) => {
+				this.schemas = data;
+			},
+			error: err => {
+				this.notificationService.error('Error during fetching of schemas');
+				console.log(err);
+			}
+		});
+	}
 
 	public query(): void {
 		const queryToRun = this.sqlCode.replace(/--.*|\/\*[\s\S]*?\*\//gm, '')
@@ -48,7 +65,8 @@ export class SandboxComponent {
 	public submit(): void {
 		this.createTaskDto.solution = JSON.stringify(this.data);
 		if (this.createTaskDto.title === '' || this.createTaskDto.description === ''
-			|| this.createTaskDto.complexity === '' || this.createTaskDto.solution.length === 0) {
+			|| this.createTaskDto.complexity === '' || this.createTaskDto.solution.length === 0
+			|| this.createTaskDto.databaseId === 0) {
 			this.notificationService.error('All fields are required');
 		} else {
 			this.taskService.create(this.createTaskDto).subscribe({

@@ -13,4 +13,8 @@ export class SchemaService {
 	public getSchema(taskId: number): Observable<any> {
 		return this.http.get(`/schema/${taskId}`, { responseType: 'blob' });
 	}
+
+	public getAllSchemas(): Observable<any> {
+		return this.http.get('/schema');
+	}
 }
