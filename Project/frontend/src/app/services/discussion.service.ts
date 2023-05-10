@@ -20,7 +20,7 @@ export class DiscussionService {
 		});
 	}
 
-	public deleteDuscussion(id: string): Observable<any> {
+	public deleteDuscussion(id: number): Observable<any> {
 		return this.http.delete(`/discussion/${id}`);
 	}
 }

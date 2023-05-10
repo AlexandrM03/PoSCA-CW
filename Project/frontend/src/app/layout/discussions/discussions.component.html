@@ -8,6 +8,12 @@
       [routerLink]="['/discussions', discussion.id]"
     >
       <div class="discussion-topic">{{ discussion.topic }}</div>
+      <mat-icon
+        class="delete"
+        (click)="deleteDiscussion(discussion.id!); $event.stopPropagation()"
+        *ngIf="isAdmin"
+        >delete</mat-icon
+      >
     </div>
   </div>
 </div>

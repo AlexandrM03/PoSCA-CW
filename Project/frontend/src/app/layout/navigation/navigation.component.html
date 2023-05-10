@@ -1,5 +1,13 @@
 <nav>
-  <a routerLink="/" class="main">LeetBattles</a>
+  <a
+    *ngIf="isLoggedIn; else notAuthenticated"
+    routerLink="/challenges"
+    class="main"
+    >LeetBattles</a
+  >
+  <ng-template #notAuthenticated>
+    <a routerLink="/" class="main">LeetBattles</a>
+  </ng-template>
 
   <div class="btns">
     <ng-container *ngIf="isLoggedIn; else loginButtons">

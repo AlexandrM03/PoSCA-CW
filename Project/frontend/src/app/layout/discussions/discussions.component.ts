@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Discussion } from 'src/app/models/discussion.model';
 import { DiscussionService } from 'src/app/services/discussion.service';
 import { DiscussionDialogComponent } from '../discussion-dialog/discussion-dialog.component';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
 	selector: 'app-discussions',
@@ -11,9 +13,12 @@ import { DiscussionDialogComponent } from '../discussion-dialog/discussion-dialo
 })
 export class DiscussionsComponent implements OnInit {
 	public discussions: Discussion[] = [];
+	public isAdmin: boolean = false;
 
 	constructor(
 		private discussionService: DiscussionService,
+		private tokenStorage: TokenStorageService,
+		private notificationService: NotificationService,
 		private dialog: MatDialog
 	) { }
 
@@ -21,6 +26,7 @@ export class DiscussionsComponent implements OnInit {
 		this.discussionService.getDiscussions().subscribe((discussions: Discussion[]) => {
 			this.discussions = discussions;
 		});
+		this.isAdmin = this.tokenStorage.isAdmin();
 	}
 
 	openDialog(): void {
@@ -31,6 +37,18 @@ export class DiscussionsComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(result => {
 			if (result) {
 				this.discussions.push(result);
+			}
+		});
+	}
+
+	deleteDiscussion(discussionId: number): void {
+		this.discussionService.deleteDuscussion(discussionId).subscribe({
+			next: () => {
+				this.notificationService.success('Discussion deleted successfully');
+				this.discussions = this.discussions.filter((discussion: Discussion) => discussion.id !== discussionId);
+			},
+			error: (err) => {
+				console.error(err);
 			}
 		});
 	}
