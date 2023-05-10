@@ -67,9 +67,11 @@ model tasks {
   solution          Json               @db.Json
   accepted          Boolean            @default(false)
   complexity_id     Int?
+  database_id       Int?
   comments          comments[]
   solutions         solutions[]
   task_complexities task_complexities? @relation(fields: [complexity_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  databases         databases?         @relation(fields: [database_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model user_roles {
@@ -90,4 +92,11 @@ model users {
   solutions       solutions[]
   statistics      statistics[]
   user_roles      user_roles?  @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model databases {
+  id         Int     @id @default(autoincrement())
+  name       String  @db.VarChar(50)
+  image_path String  @db.VarChar(100)
+  tasks      tasks[]
 }

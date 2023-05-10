@@ -15,9 +15,10 @@ import { CommentModule } from './comment/comment.module';
 import { DiscussionModule } from './discussion/discussion.module';
 import { MessageModule } from './message/message.module';
 import { ChatModule } from './chat/chat.module';
+import { SchemaModule } from './schema/schema.module';
 
 @Module({
-	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule, ExercisesModule, SolutionModule, StatisticModule, CommentModule, DiscussionModule, MessageModule, ChatModule],
+	imports: [ConfigModule.forRoot(), AuthModule, UserModule, PaginationModule, TaskModule, ExercisesModule, SolutionModule, StatisticModule, CommentModule, DiscussionModule, MessageModule, ChatModule, SchemaModule],
 	controllers: [AppController],
 	providers: [AppService, PrismaService, ExercisesService],
 })

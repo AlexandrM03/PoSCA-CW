@@ -17,6 +17,9 @@
       Reject
     </button>
   </div>
+  <div class="schema">
+    <img [src]="imageURL" *ngIf="imageURL" style="width: 100%" />
+  </div>
   <div class="sql-query">
     <ngx-monaco-editor
       [options]="editorOptions"
@@ -37,15 +40,15 @@
       </tbody>
     </table>
   </div>
-  <div class="input-container" *ngIf="!isAdmin">
-    <input
-      [(ngModel)]="content"
-      (keyup.enter)="createComment()"
-      class="input-field"
-    />
-    <button (click)="createComment()" class="send-button">Send</button>
-  </div>
   <div class="comments" *ngIf="!isAdmin">
+    <div class="input-container" *ngIf="!isAdmin">
+      <input
+        [(ngModel)]="content"
+        (keyup.enter)="createComment()"
+        class="input-field"
+      />
+      <button (click)="createComment()" class="send-button">Send</button>
+    </div>
     <ul>
       <li *ngFor="let comment of comments">
         <span>

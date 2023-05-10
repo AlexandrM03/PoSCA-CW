@@ -4,6 +4,7 @@ import { Comment } from 'src/app/models/comment.model';
 import { Task } from 'src/app/models/task.model';
 import { CommentService } from 'src/app/services/comment.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SchemaService } from 'src/app/services/schema.service';
 import { TaskService } from 'src/app/services/task.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -20,6 +21,7 @@ export class ChallengeComponent implements OnInit {
 	public sqlCode: string = '';
 	public columns: string[] = [];
 	public data: any[] = [];
+	public imageURL: string = '';
 	public content: string = '';
 	public isAdmin: boolean = false;
 
@@ -28,6 +30,7 @@ export class ChallengeComponent implements OnInit {
 		private route: ActivatedRoute,
 		private notificationService: NotificationService,
 		private commentService: CommentService,
+		private schemaService: SchemaService,
 		private tokenStorage: TokenStorageService,
 		private router: Router
 	) { }
@@ -46,6 +49,12 @@ export class ChallengeComponent implements OnInit {
 				},
 				error: err => {
 					console.log(err);
+				}
+			});
+
+			this.schemaService.getSchema(params['id']).subscribe({
+				next: data => {
+					this.imageURL = URL.createObjectURL(data);
 				}
 			});
 

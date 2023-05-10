@@ -51,6 +51,17 @@ create table tasks
     complexity_id int references task_complexities (id)
 );
 
+create table databases
+(
+    id         serial primary key,
+    name       varchar(50) not null,
+    image_path varchar(100) not null
+);
+
+insert into databases (name, image_path) values ('Airport', './assets/airport.svg');
+
+alter table tasks add column database_id int references databases (id);
+
 create table solutions
 (
     id            serial primary key,
