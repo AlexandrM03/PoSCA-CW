@@ -13,7 +13,10 @@ import { Client } from 'pg';
 					host: configService.get<string>('DB_HOST'),
 					database: configService.get<string>('DB_NAME'),
 					password: configService.get<string>('DB_PASSWORD'),
-					port: configService.get<number>('DB_PORT')
+					port: configService.get<number>('DB_PORT'),
+					ssl: {
+						rejectUnauthorized: false
+					}
 				});
 				await client.connect();
 				return client;

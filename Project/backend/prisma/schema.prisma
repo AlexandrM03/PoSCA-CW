@@ -1,102 +1,102 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model comments {
-  id            Int      @id @default(autoincrement())
-  content       String
-  creation_time DateTime @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
-  user_id       Int?
-  task_id       Int?
-  reported      Boolean  @default(false)
-  tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id            Int      @id @default(autoincrement())
+    content       String
+    creation_time DateTime @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+    user_id       Int?
+    task_id       Int?
+    reported      Boolean  @default(false)
+    tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model discussions {
-  id       Int        @id @default(autoincrement())
-  topic    String     @db.VarChar(50)
-  messages messages[]
+    id       Int        @id @default(autoincrement())
+    topic    String     @db.VarChar(50)
+    messages messages[]
 }
 
 model messages {
-  id            Int          @id @default(autoincrement())
-  content       String
-  creation_time DateTime     @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
-  discussion_id Int?
-  user_id       Int?
-  discussions   discussions? @relation(fields: [discussion_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id            Int          @id @default(autoincrement())
+    content       String
+    creation_time DateTime     @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+    discussion_id Int?
+    user_id       Int?
+    discussions   discussions? @relation(fields: [discussion_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    users         users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model solutions {
-  id            Int      @id @default(autoincrement())
-  query         String
-  solution_time DateTime @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
-  task_id       Int?
-  user_id       Int?
-  tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id            Int      @id @default(autoincrement())
+    query         String
+    solution_time DateTime @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+    task_id       Int?
+    user_id       Int?
+    tasks         tasks?   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    users         users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model statistics {
-  id              Int    @id @default(autoincrement())
-  tasks_completed Int    @default(0)
-  score           Int    @default(0)
-  user_id         Int?
-  users           users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id              Int    @id @default(autoincrement())
+    tasks_completed Int    @default(0)
+    score           Int    @default(0)
+    user_id         Int?
+    users           users? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model task_complexities {
-  id    Int     @id @default(autoincrement())
-  name  String  @db.VarChar(50)
-  tasks tasks[]
+    id    Int     @id @default(autoincrement())
+    name  String  @db.VarChar(50)
+    tasks tasks[]
 }
 
 model tasks {
-  id                Int                @id @default(autoincrement())
-  title             String             @db.VarChar(50)
-  description       String
-  creation_time     DateTime           @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
-  solved_times      Int                @default(0)
-  solution          Json               @db.Json
-  accepted          Boolean            @default(false)
-  complexity_id     Int?
-  database_id       Int?
-  comments          comments[]
-  solutions         solutions[]
-  task_complexities task_complexities? @relation(fields: [complexity_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  databases         databases?         @relation(fields: [database_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id                Int                @id @default(autoincrement())
+    title             String             @db.VarChar(50)
+    description       String
+    creation_time     DateTime           @default(dbgenerated("timezone('utc-3'::text, CURRENT_TIMESTAMP(0))")) @db.Timestamp(6)
+    solved_times      Int                @default(0)
+    solution          Json               @db.Json
+    accepted          Boolean            @default(false)
+    complexity_id     Int?
+    database_id       Int?
+    comments          comments[]
+    solutions         solutions[]
+    task_complexities task_complexities? @relation(fields: [complexity_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    databases         databases?         @relation(fields: [database_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model user_roles {
-  id    Int     @id @default(autoincrement())
-  name  String  @db.VarChar(50)
-  users users[]
+    id    Int     @id @default(autoincrement())
+    name  String  @db.VarChar(50)
+    users users[]
 }
 
 model users {
-  id              Int          @id @default(autoincrement())
-  username        String       @unique @db.VarChar(50)
-  email           String       @unique @db.VarChar(50)
-  password        String       @db.VarChar(300)
-  activation_code String?
-  role_id         Int?         @default(2)
-  comments        comments[]
-  messages        messages[]
-  solutions       solutions[]
-  statistics      statistics[]
-  user_roles      user_roles?  @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id              Int          @id @default(autoincrement())
+    username        String       @unique @db.VarChar(50)
+    email           String       @unique @db.VarChar(50)
+    password        String       @db.VarChar(300)
+    activation_code String?
+    role_id         Int?         @default(2)
+    comments        comments[]
+    messages        messages[]
+    solutions       solutions[]
+    statistics      statistics[]
+    user_roles      user_roles?  @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model databases {
-  id         Int     @id @default(autoincrement())
-  name       String  @db.VarChar(50)
-  image_path String  @db.VarChar(100)
-  tasks      tasks[]
+    id         Int     @id @default(autoincrement())
+    name       String  @db.VarChar(50)
+    image_path String  @db.VarChar(100)
+    tasks      tasks[]
 }
