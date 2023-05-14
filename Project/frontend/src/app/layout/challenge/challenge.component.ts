@@ -55,6 +55,7 @@ export class ChallengeComponent implements OnInit {
 			this.schemaService.getSchema(params['id']).subscribe({
 				next: data => {
 					this.imageURL = URL.createObjectURL(data);
+					console.table(data);
 				}
 			});
 

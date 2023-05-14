@@ -58,7 +58,8 @@ create table databases
     image_path varchar(100) not null
 );
 
-insert into databases (name, image_path) values ('Airport', './assets/airport.svg');
+insert into databases (name, image_path) values ('Airport', './assets/airport.png');
+insert into databases (name, image_path) values ('SalesTracker', './assets/salestracker.png');
 
 alter table tasks add column database_id int references databases (id);
 
@@ -97,4 +98,3 @@ create table messages
     discussion_id int references discussions (id),
     user_id       int references users (id)
 );
-

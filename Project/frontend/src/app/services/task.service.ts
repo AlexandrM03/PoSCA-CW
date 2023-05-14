@@ -13,13 +13,19 @@ export class TaskService {
 	) { }
 
 	public getTasks(dto: TaskSortDto): Observable<any> {
-		const { sort, searchTerm } = dto;
+		const { sort, searchTerm, complexity, page } = dto;
 		let params = new HttpParams();
 		if (sort) {
 			params = params.append('sort', sort);
 		}
 		if (searchTerm) {
 			params = params.append('searchTerm', searchTerm);
+		}
+		if (complexity) {
+			params = params.append('complexity', complexity);
+		}
+		if (page) {
+			params = params.append('page', page.toString());
 		}
 
 		return this.http.get('/task', { params });

@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { EnumStatisticSort, GetAllStatisticDto } from './dto/get-all.statistic';
 import { Prisma } from '@prisma/client';
 import { PaginationService } from 'src/pagination/pagination.service';
+import { Role } from 'src/auth/enum/role.enum';
 
 @Injectable()
 export class StatisticService {
@@ -33,6 +34,13 @@ export class StatisticService {
 				users: {
 					select: {
 						username: true
+					}
+				}
+			},
+			where: {
+				users: {
+					NOT: {
+						role_id: Role.Admin
 					}
 				}
 			}

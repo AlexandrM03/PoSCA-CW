@@ -50,6 +50,48 @@
         Oldest
       </label>
     </div>
+    <div class="radio-buttons-container">
+      <label>
+        <input
+          type="radio"
+          name="all"
+          value="all"
+          [(ngModel)]="sort.complexity"
+          (change)="onComplexityChange()"
+        />
+        All
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="easy"
+          value="easy"
+          [(ngModel)]="sort.complexity"
+          (change)="onComplexityChange()"
+        />
+        Easy
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="medium"
+          value="medium"
+          [(ngModel)]="sort.complexity"
+          (change)="onComplexityChange()"
+        />
+        Medium
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="hard"
+          value="hard"
+          [(ngModel)]="sort.complexity"
+          (change)="onComplexityChange()"
+        />
+        Hard
+      </label>
+    </div>
   </div>
   <div class="challenges-table">
     <table>
@@ -82,5 +124,13 @@
         </tr>
       </tbody>
     </table>
+    <div class="arrows-container" *ngIf="!isAdmin">
+      <button (click)="prevPage()" [disabled]="sort.page === 1">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button (click)="nextPage()" [disabled]="length - sort.page * 8 <= 0">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

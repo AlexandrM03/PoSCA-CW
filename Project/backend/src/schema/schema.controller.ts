@@ -1,4 +1,4 @@
-import { Controller, Get, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Res, UseGuards, Param } from '@nestjs/common';
 import { SchemaService } from './schema.service';
 import { RolesGuard } from 'src/auth/decorators/role.decorator';
 import { Role } from 'src/auth/enum/role.enum';
@@ -14,7 +14,7 @@ export class SchemaController {
 	@Roles(Role.User, Role.Admin)
 	@Auth()
 	@Get()
-	async getAll(id: number) {
+	async getAll() {
 		const databases = await this.schemaService.getAllSchemas();
 		const databaseWithSchemas = await Promise.all(
 			databases.map(async db => {
@@ -33,8 +33,8 @@ export class SchemaController {
 	@Roles(Role.User, Role.Admin)
 	@Auth()
 	@Get(':id')
-	async getSchemaByTaskId(id: number, @Res() res: Response) {
-		const fileName = (await this.schemaService.getSchemaByTaskId(id)).image_path;
+	async getSchemaByTaskId(@Param('id') id: number, @Res() res: Response) {
+		const fileName = (await this.schemaService.getSchemaByTaskId(+id)).image_path;
 		return res.sendFile(fileName, {
 			root: '.'
 		});

@@ -16,6 +16,7 @@ export class ChallengesComponent implements OnInit {
 	public isTasksLoaded: boolean = false;
 	public sort: TaskSortDto;
 	public isAdmin: boolean = false;
+	public length: number = 0;
 
 	constructor(
 		private taskService: TaskService,
@@ -24,7 +25,9 @@ export class ChallengesComponent implements OnInit {
 	) {
 		this.sort = {
 			sort: 'most-solved',
-			searchTerm: ''
+			searchTerm: '',
+			complexity: 'all',
+			page: 1
 		};
 	}
 
@@ -44,7 +47,8 @@ export class ChallengesComponent implements OnInit {
 		} else {
 			this.taskService.getTasks(this.sort).subscribe({
 				next: data => {
-					this.tasks = data;
+					this.tasks = data.tasks;
+					this.length = data.length;
 					this.isTasksLoaded = true;
 				},
 				error: err => {
@@ -64,20 +68,32 @@ export class ChallengesComponent implements OnInit {
 	}
 
 	public onSortChange(): void {
-		this.taskService.getTasks(this.sort).subscribe({
-			next: data => {
-				this.tasks = data;
-			},
-			error: err => {
-				console.log(err);
-			}
-		});
+		this.getTasks();
 	}
 
 	public onSearch(): void {
+		this.getTasks();
+	}
+
+	public nextPage(): void {
+		this.sort.page++;
+		this.getTasks();
+	}
+
+	public prevPage(): void {
+		this.sort.page--;
+		this.getTasks();
+	}
+
+	public onComplexityChange(): void {
+		this.getTasks();
+	}
+
+	public getTasks(): void {
 		this.taskService.getTasks(this.sort).subscribe({
 			next: data => {
-				this.tasks = data;
+				this.tasks = data.tasks;
+				this.length = data.length;
 			},
 			error: err => {
 				console.log(err);

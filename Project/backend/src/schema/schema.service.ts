@@ -6,15 +6,18 @@ export class SchemaService {
 	constructor(private prisma: PrismaService) { }
 
 	async getSchemaByTaskId(taskId: number) {
-		return await this.prisma.databases.findFirst({
+		return (await this.prisma.tasks.findUnique({
 			where: {
-				tasks: {
-					some: {
-						id: taskId
+				id: taskId
+			},
+			select: {
+				databases: {
+					select: {
+						image_path: true
 					}
 				}
 			}
-		});
+		})).databases;
 	}
 
 	async getAllSchemas() {

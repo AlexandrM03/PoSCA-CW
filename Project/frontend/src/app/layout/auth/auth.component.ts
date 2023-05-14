@@ -46,11 +46,8 @@ export class AuthComponent {
 	public register(username: string, email: string, password: string) {
 		console.log(username, email, password);
 		this.authService.register(username, email, password).subscribe({
-			next: data => {
-				this.tokenStorage.saveToken(data.accessToken);
-				this.tokenStorage.saveUser(data.user);
-
-				this.router.navigate(['/']);
+			next: () => {
+				window.location.reload();
 			},
 			error: err => {
 				this.notificationService.error(err.message);

@@ -28,6 +28,8 @@ import { StatisticComponent } from './layout/statistic/statistic.component';
 import { SandboxComponent } from './layout/sandbox/sandbox.component';
 import { CommentsComponent } from './layout/comments/comments.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
+import { NotFoundComponent } from './layout/not-found/not-found.component';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { MatIconModule } from '@angular/material/icon';
 		DiscussionDialogComponent,
 		StatisticComponent,
 		SandboxComponent,
-		CommentsComponent
+		CommentsComponent,
+  NotFoundComponent
 	],
 	imports: [
 		BrowserModule,
@@ -59,7 +62,8 @@ import { MatIconModule } from '@angular/material/icon';
 		HighlightModule,
 		MonacoEditorModule.forRoot(),
 		MatDialogModule,
-		MatIconModule
+		MatIconModule,
+		MatRadioModule
 	],
 	providers: [authInterceptorProviders, errorInterceptorProviders, apiInterceptorProviders,
 		{

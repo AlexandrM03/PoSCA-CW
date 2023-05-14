@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PaginationService } from 'src/pagination/pagination.service';
 import { PrismaService } from 'src/prisma.service';
-import { EnumTaskSort, GetAllTaskDto } from './dto/get-all.task.dto';
+import { EnumTaskComplexitySort, EnumTaskSort, GetAllTaskDto } from './dto/get-all.task.dto';
 import { ExercisesService } from 'src/exercises/exercises.service';
 import { EnumTaskComplexity, TaskDto } from './dto/task.dto';
 import { TaskQueryDto } from './dto/task-query.dto';
@@ -20,7 +20,7 @@ export class TaskService {
 	) { }
 
 	async getAll(dto: GetAllTaskDto = {}) {
-		const { sort, searchTerm } = dto;
+		const { sort, searchTerm, complexity } = dto;
 		const prismaSort: Prisma.tasksOrderByWithRelationInput[] = [];
 
 		if (sort === EnumTaskSort.LEAST_SOLVED) {
@@ -50,12 +50,18 @@ export class TaskService {
 			]
 		} : {};
 
+		const prismaComplexityFilter: Prisma.tasksWhereInput = complexity && complexity != EnumTaskComplexitySort.ALL ? {
+			complexity_id: {
+				equals: await this.getComplexityIdByName(complexity)
+			}
+		} : {};
 		const { perPage, skip } = this.paginationService.getPagination(dto);
 
 		const tasks = await this.prisma.tasks.findMany({
 			where: {
 				AND: [
 					prismaSerchTermFilter,
+					prismaComplexityFilter,
 					{
 						accepted: true
 					}
@@ -73,14 +79,17 @@ export class TaskService {
 			take: perPage
 		});
 
-		// return {
-		// 	tasks,
-		// 	length: await this.prisma.tasks.count({
-		// 		where: prismaSerchTermFilter
-		// 	})
-		// }
-
-		return tasks;
+		return {
+			tasks,
+			length: await this.prisma.tasks.count({
+				where: {
+					AND: [
+						prismaSerchTermFilter,
+						prismaComplexityFilter
+					]
+				}
+			})
+		}
 	}
 
 	async getUnconfirmed() {
@@ -96,6 +105,22 @@ export class TaskService {
 				}
 			}
 		});
+	}
+
+	async getComplexityIdByName(name: string) {
+		const complexity = await this.prisma.task_complexities.findFirst({
+			where: {
+				name
+			}, select: {
+				id: true
+			}
+		});
+
+		if (!complexity) {
+			throw new NotFoundException('Invalid complexity');
+		}
+
+		return complexity.id;
 	}
 
 	async get(id: number) {

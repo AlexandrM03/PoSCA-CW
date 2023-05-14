@@ -1,5 +1,6 @@
 create database airport;
 
+-- Airport --
 create table company
 (
     id   serial primary key,
@@ -30,3 +31,26 @@ create table pass_in_trip
     passenger int not null references passenger (id),
     place     varchar(10)
 );
+
+-- SalesTracker --
+create table customers
+(
+    id    serial primary key,
+    name  text not null,
+    email text not null
+);
+
+create table orders
+(
+    id          serial primary key,
+    customer_id integer references customers (id),
+    product     text    not null,
+    quantity    integer not null,
+    price       numeric not null
+);
+
+-- user --
+create user taskuser with password 'qwerty11';
+grant connect on database airport to taskuser;
+grant usage on schema public to taskuser;
+grant select on all tables in schema public to taskuser;
