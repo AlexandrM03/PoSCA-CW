@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ApiInterceptor implements HttpInterceptor {
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		const apiReq = req.clone({ url: `http://localhost:3000/api${req.url}` });
+		const apiReq = req.clone({ url: `https://leetbattles-api.onrender.com/api${req.url}` });
 		return next.handle(apiReq);
 	}
 }
